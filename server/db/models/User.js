@@ -7,13 +7,50 @@ const axios = require('axios');
 const SALT_ROUNDS = 5;
 
 const User = db.define('user', {
-  username: {
+  email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate:{
+      isEmail: true
+    }
   },
   password: {
     type: Sequelize.STRING,
+    allowNull: false,
+    validate:{
+      notEmpty: true
+    }
+  },
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  phoneNumber:{
+    type: Sequelize.STRING,
+    validate: {
+      isNumeric: true
+    }
+  },
+  shippingAddress: {
+    type: Sequelize.STRING
+  },
+  billingAddress: {
+    type: Sequelize.STRING
+  },
+  userType: {
+    type: Sequelize.ENUM('standard', 'admin'),
+    defaultValue: 'standard'
   }
 })
 
@@ -72,3 +109,4 @@ const hashPassword = async(user) => {
 User.beforeCreate(hashPassword)
 User.beforeUpdate(hashPassword)
 User.beforeBulkCreate(users => Promise.all(users.map(hashPassword)))
+
