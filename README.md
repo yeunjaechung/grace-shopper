@@ -1,5 +1,24 @@
 # FS-App-Template
 
+#Components
+Customers/visitors
+- AllProducts
+  - Functionality: add to cart, edit cart
+- SingleProduct
+  - Functionality: add to cart
+- CheckoutPage
+  - Functionality: add to cart, edit cart
+
+LoggedInCustomers
+- AllProducts
+
+Administrator
+- AllUsers (only accessible by Administrator)
+
+Engineer
+
+
+
 ## Setup
 
 To use this as boilerplate, you'll need to take the following steps:
