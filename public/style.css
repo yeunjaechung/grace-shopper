@@ -11,11 +11,17 @@ label {
 }
 
 nav a {
-  display: inline-block;
+  display: flex;
   margin: 1em;
 }
 
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.linkHolder {
+  display: flex;
+  margin: 1em;
+  justify-content: space-around;
 }
