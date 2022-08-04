@@ -30,11 +30,8 @@ const Product = db.define("product", {
   },
 });
 
-
 Product.beforeCreate((product) => {
   product.price = Math.floor(product.price * 100);
 });
-
-
 
 module.exports = Product;
