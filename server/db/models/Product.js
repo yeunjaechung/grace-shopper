@@ -10,7 +10,7 @@ const Product = db.define("product", {
     },
   },
   price: {
-    type: Sequelize.DECIMAL,
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       notEmpty: true,
@@ -29,5 +29,12 @@ const Product = db.define("product", {
     type: Sequelize.INTEGER,
   },
 });
+
+
+Product.beforeCreate((product) => {
+  product.price = Math.floor(product.price * 100);
+});
+
+
 
 module.exports = Product;
