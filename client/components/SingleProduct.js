@@ -9,7 +9,8 @@ export class SingleProduct extends React.Component {
   }
   render() {
     const product = this.props.product;
-    return <div> Product Name: {product.name}</div>;
+    return <div> Product Name: {product.name}
+    <button>Add to Cart</button></div>;
   }
 }
 

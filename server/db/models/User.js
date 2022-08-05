@@ -24,17 +24,9 @@ const User = db.define('user', {
   },
   firstName: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
   },
   lastName: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
   },
   phoneNumber:{
     type: Sequelize.STRING,
@@ -109,4 +101,7 @@ const hashPassword = async(user) => {
 User.beforeCreate(hashPassword)
 User.beforeUpdate(hashPassword)
 User.beforeBulkCreate(users => Promise.all(users.map(hashPassword)))
-
+//after user is created, assoicate them with the order model via magic methods
+User.afterCreate(async (user) => {
+  await user.createOrder({status: 'open'})
+})

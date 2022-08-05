@@ -5,13 +5,21 @@ const FETCH_SINGLE_PRODUCT = "FETCH_SINGLE_PRODUCT"
 const setProduct = (product) => {
   return {
     type: FETCH_SINGLE_PRODUCT,
-    campus,
+    product,
   };
 };
 
 export const fetchProduct = (productId) => {
   return async function (dispatch) {
     const response = await axios.get(`/api/products/${productId}`);
+    const product = response.data;
+    dispatch(setProduct(product));
+  };
+};
+
+export const addProductToCart = (productId, userId) => {
+  return async function (dispatch) {
+    const response = await axios.put(`/api/products/addToCart/${productId}`, userId);
     const product = response.data;
     dispatch(setProduct(product));
   };

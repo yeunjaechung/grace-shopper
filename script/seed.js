@@ -73,6 +73,16 @@ async function seed() {
       });
     })
   );
+  // console.log(users)
+  // [yj, ethan, warren, ryan] = users;
+
+  // const yjOrder = Order.create({ status: "open" });
+
+  // yj.addOrder(yjOrder);
+  // ethan.addOrder(yjOrder);
+  // warren.addOrder(yjOrder);
+  // ryan.addOrder(yjOrder);
+
 
   // [Yj, ethan, warren, ryan] = users;
 
