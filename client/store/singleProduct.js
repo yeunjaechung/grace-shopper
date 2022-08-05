@@ -5,7 +5,7 @@ const FETCH_SINGLE_PRODUCT = "FETCH_SINGLE_PRODUCT"
 const setProduct = (product) => {
   return {
     type: FETCH_SINGLE_PRODUCT,
-    campus,
+    product,
   };
 };
 

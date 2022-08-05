@@ -8,10 +8,7 @@ import AllProducts from "./components/AllProducts";
 import SingleProduct from "./components/SingleProduct";
 import Checkout from "./components/Checkout";
 import Payment from "./components/Payment";
-
-
 import Cart from "./components/Cart";
-import Checkout from "./components/Checkout";
 
 /**
  * COMPONENT
