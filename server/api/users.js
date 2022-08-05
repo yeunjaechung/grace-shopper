@@ -81,27 +81,6 @@ router.put('/checkout/:id', async (req, res, next) => {
   }
 });
 
-
-router.put('/additem/:id', async (req, res, next) => {
-  try{
-    const product = await Product.findByPk(req.body.id);
-    const {id} = req.params;
-    const user = await User.findByPk(id, {
-      include:{
-        model: Order,
-        where: {
-          status: 'open'
-        }
-      }
-    });
-    const orderToAddTo = await Order.findByPk(user.order.id);
-    await orderToAddTo.addProduct(product);
-    res.send(orderToAddTo);
-  }catch(err){
-    next(err)
-  }
-});
-
 //add item to cart:
 router.put('/addToCart/:productId', async (req, res, next) => {
   try{
