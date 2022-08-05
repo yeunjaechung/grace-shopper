@@ -73,12 +73,16 @@ async function seed() {
       });
     })
   );
-
-  // [Yj, ethan, warren, ryan] = users;
+  // console.log(users)
+  // [yj, ethan, warren, ryan] = users;
 
   // const yjOrder = Order.create({ status: "open" });
 
-  // Yj.addOrder(yjOrder);
+  // yj.addOrder(yjOrder);
+  // ethan.addOrder(yjOrder);
+  // warren.addOrder(yjOrder);
+  // ryan.addOrder(yjOrder);
+
 
   console.log(`seeded successfully`);
 }

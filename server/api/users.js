@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { models: { User, Order_Products }} = require('../db');
+const { models: { User, Order, Order_Products }} = require('../db');
 const Order = require('../db/models/Order');
 const Product = require('../db/models/Product');
 module.exports = router
@@ -74,21 +74,17 @@ router.post('/newUser', async (req, res, next) => {
 router.put('/checkout/:id', async (req, res, next) => {
   try{
     const {id} = req.params;
-    const user = await User.findByPk(id, {
-      include:{
-        model: Order,
-        where: {
-          status: 'open'
-        }
-      }
-    });
-    const ordersToClose = await Order.findByPk(user.order.id);
-    await ordersToClose.update({status: 'closed'});
-    res.send(ordersToClose);
+    const ordersToClose = await Order.findOne({where: {
+    userId: id,
+    status: 'open'
+  }});
+  await order.update({status: 'closed'});
+  res.send(ordersToClose)
   }catch(err){
     next(err)
   }
 });
+
 
 router.put('/additem/:id', async (req, res, next) => {
   try{
