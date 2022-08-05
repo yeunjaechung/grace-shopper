@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchOrder } from "../store/checkout";
+import {Link} from 'react-router-dom'
+
 
 export class Checkout extends React.Component {
   componentDidMount() {
@@ -18,7 +20,7 @@ export class Checkout extends React.Component {
         <p>Billing Address: User.billingAddress</p>
         <div>Order Review: Products: ul products.map...</div>
         <div>ContactInfo: user.email user.phone</div>
-        <Link>On to payment</Link>
+        <Link to={`/cart/${userId}/payment`}><button>Onto Payment</button></Link>
       </div>
     );
   }

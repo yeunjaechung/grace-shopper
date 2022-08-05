@@ -6,12 +6,14 @@ import auth from "./auth";
 import productsReducer from "./allProducts";
 import singleProductReducer from "./singleProduct";
 import orderReducer from "./order";
+import checkoutReducer from "./checkout";
 
 const reducer = combineReducers({
   auth: auth,
   products: productsReducer,
   product: singleProductReducer,
   order: orderReducer,
+  checkoutOrder: checkoutReducer
 });
 
 const middleware = composeWithDevTools(

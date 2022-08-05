@@ -17,6 +17,14 @@ export const fetchProduct = (productId) => {
   };
 };
 
+export const addProductToCart = (productId, userId) => {
+  return async function (dispatch) {
+    const response = await axios.put(`/api/products/addToCart/${productId}`, userId);
+    const product = response.data;
+    dispatch(setProduct(product));
+  };
+};
+
 const initialState = {};
 
 export default function singleProductReducer(state = initialState, action) {

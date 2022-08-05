@@ -84,6 +84,12 @@ async function seed() {
   // ryan.addOrder(yjOrder);
 
 
+  // [Yj, ethan, warren, ryan] = users;
+
+  // const yjOrder = Order.create({ status: "open" });
+
+  // Yj.addOrder(yjOrder);
+
   console.log(`seeded successfully`);
 }
 
