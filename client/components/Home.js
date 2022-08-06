@@ -18,6 +18,7 @@ export const Home = props => {
  * CONTAINER
  */
 const mapState = state => {
+  
   return {
     email: state.auth.email
   }

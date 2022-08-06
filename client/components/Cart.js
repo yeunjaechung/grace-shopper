@@ -5,8 +5,8 @@ import { getCart } from "../store/order";
 import CartItem from "./CartItem";
 
 class Cart extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       total: 0,
     };
