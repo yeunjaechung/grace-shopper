@@ -74,21 +74,59 @@ async function seed() {
     })
   );
   // console.log(users)
-  // [yj, ethan, warren, ryan] = users;
 
-  // const yjOrder = Order.create({ status: "open" });
+  const [yj, ethan, warren, ryan] = users;
 
-  // yj.addOrder(yjOrder);
-  // ethan.addOrder(yjOrder);
-  // warren.addOrder(yjOrder);
-  // ryan.addOrder(yjOrder);
+  const products = await Promise.all([
+    Product.create({ name: "12", price: 12, flavorText: "12" }),
+    Product.create({ name: "21", price: 21, flavorText: "21" }),
+    Product.create({ name: "34", price: 34, flavorText: "34" }),
+    Product.create({ name: "93", price: 93, flavorText: "93" }),
+    Product.create({ name: "56", price: 56, flavorText: "56" }),
+    Product.create({ name: "61", price: 61, flavorText: "61" }),
+    Product.create({ name: "17", price: 17, flavorText: "17" }),
+    Product.create({ name: "50", price: 50, flavorText: "50" }),
+    Product.create({ name: "81", price: 81, flavorText: "81" }),
+  ]);
 
+  const [
+    product1,
+    product2,
+    product3,
+    product4,
+    product5,
+    product6,
+    product7,
+    product8,
+    product9,
+  ] = products;
 
-  // [Yj, ethan, warren, ryan] = users;
+  const yjOrder1 = await Order.create();
+  const yjOrder2 = await Order.create({ status: "closed" });
+  const ethanOrder1 = await Order.create();
+  const ethanOrder2 = await Order.create({ status: "closed" });
+  const ethanOrder3 = await Order.create({ status: "closed" });
 
-  // const yjOrder = Order.create({ status: "open" });
-
-  // Yj.addOrder(yjOrder);
+  await yj.addOrders([yjOrder1, yjOrder2]);
+  await ethan.addOrders([ethanOrder1, ethanOrder2, ethanOrder3]);
+  await yjOrder1.addProducts([product1, product2, product5, product3]);
+  await yjOrder2.addProducts([product6, product3, product5, product9]);
+  await ethanOrder1.addProducts([
+    product6,
+    product3,
+    product5,
+    product9,
+    product7,
+    product8,
+  ]);
+  await ethanOrder2.addProducts([product6, product3, product5, product4]);
+  await ethanOrder3.addProducts([
+    product7,
+    product1,
+    product7,
+    product4,
+    product6,
+  ]);
 
   console.log(`seeded successfully`);
 }
