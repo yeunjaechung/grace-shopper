@@ -10,6 +10,9 @@ const Order = require("./models/Order");
 const Order_Products = db.define("Order_Product", {
   quantity: {
     type: Sequelize.INTEGER,
+    validate: {
+      min: 1
+    }
   },
   //Price is calculated in pennies
   unitPrice: {
@@ -19,6 +22,15 @@ const Order_Products = db.define("Order_Product", {
     type: Sequelize.INTEGER,
   },
 });
+
+Order_Products.beforeCreate(instance => {
+  instance.quantity = 1;
+})
+
+// Order_Products.beforeValidate(instance => {
+  
+  
+// })
 
 Order.belongsTo(User);
 User.hasMany(Order);
