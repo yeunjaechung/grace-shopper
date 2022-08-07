@@ -9,6 +9,8 @@ import SingleProduct from "./components/SingleProduct";
 import Checkout from "./components/Checkout";
 import Payment from "./components/Payment";
 import Cart from "./components/Cart";
+import { fetchProducts } from "./store/allProducts";
+import { fetchCart } from "./store/order";
 
 /**
  * COMPONENT
@@ -16,6 +18,13 @@ import Cart from "./components/Cart";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+    this.props.fetchProducts();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
+      this.props.fetchCart();
+    }
   }
 
   render() {
@@ -26,23 +35,27 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
-            <Redirect to="/home" />
-            <Route exact path="/products" component={AllProducts} />
+
+            <Route path="/products" component={AllProducts} />
+
             <Route
-              path="/products/:productId"
               exact
+              path="/products/:productId"
               component={SingleProduct}
             />
-             <Route path="/checkout/:userId" component={Checkout} />
-             <Route path="/cart/:userId/payment" component={Payment} />
+
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/cart/payment" component={Payment} />
+            <Route exact path="/cart" component={Cart} />
+
           </Switch>
         ) : (
           <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/products" component={AllProducts} />
+            <Route path="/" component={Login} />
+            <Route path="/products" component={AllProducts} />
             <Route
-              path="/products/:productId"
               exact
+              path="/products/:productId"
               component={SingleProduct}
             />
 
@@ -72,6 +85,8 @@ const mapDispatch = (dispatch) => {
     loadInitialData() {
       dispatch(me());
     },
+    fetchCart: () => dispatch(fetchCart()),
+    fetchProducts: () => dispatch(fetchProducts()),
   };
 };
 
