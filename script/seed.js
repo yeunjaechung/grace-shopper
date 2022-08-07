@@ -74,7 +74,6 @@ async function seed() {
     })
   );
 
-
   const [
     product1,
     product2,
@@ -86,17 +85,61 @@ async function seed() {
     product8,
     product9,
   ] = await Promise.all([
-    Product.create({ name: "12", price: 12, flavorText: "12" }),
-    Product.create({ name: "21", price: 21, flavorText: "21" }),
-    Product.create({ name: "34", price: 34, flavorText: "34" }),
-    Product.create({ name: "93", price: 93, flavorText: "93" }),
-    Product.create({ name: "56", price: 56, flavorText: "56" }),
-    Product.create({ name: "61", price: 61, flavorText: "61" }),
-    Product.create({ name: "17", price: 17, flavorText: "17" }),
-    Product.create({ name: "50", price: 50, flavorText: "50" }),
-    Product.create({ name: "81", price: 81, flavorText: "81" }),
+    Product.create({
+      name: "12",
+      price: 12,
+      flavorText: "12",
+      imageSmall: "https://images.pokemontcg.io/pl1/1.png",
+    }),
+    Product.create({
+      name: "21",
+      price: 21,
+      flavorText: "21",
+      imageSmall: "https://images.pokemontcg.io/det1/1.png",
+    }),
+    Product.create({
+      name: "34",
+      price: 34,
+      flavorText: "34",
+      imageSmall: "https://images.pokemontcg.io/mcd19/1.png",
+    }),
+    Product.create({
+      name: "93",
+      price: 93,
+      flavorText: "93",
+      imageSmall: "https://images.pokemontcg.io/dv1/1.png",
+    }),
+    Product.create({
+      name: "56",
+      price: 56,
+      flavorText: "56",
+      imageSmall: "https://images.pokemontcg.io/xy5/1.png",
+    }),
+    Product.create({
+      name: "61",
+      price: 61,
+      flavorText: "61",
+      imageSmall: "https://images.pokemontcg.io/ex7/1.png",
+    }),
+    Product.create({
+      name: "17",
+      price: 17,
+      flavorText: "17",
+      imageSmall: "https://images.pokemontcg.io/ecard2/H1.png",
+    }),
+    Product.create({
+      name: "50",
+      price: 50,
+      flavorText: "50",
+      imageSmall: "https://images.pokemontcg.io/ex3/1.png",
+    }),
+    Product.create({
+      name: "81",
+      price: 81,
+      flavorText: "81",
+      imageSmall: "https://images.pokemontcg.io/hgss4/1.png",
+    }),
   ]);
-
 
   const yjOrder1 = await yj.getCart();
   const yjOrder2 = await Order.create({ status: "closed", userId: 3 });

@@ -77,7 +77,6 @@ User.authenticate = async function ({ email, password }) {
 
 User.findByToken = async function (token) {
   try {
-
     const { id } = jwt.verify(token, process.env.JWT);
     const user = await User.findByPk(id);
 
@@ -91,7 +90,6 @@ User.findByToken = async function (token) {
     throw error;
   }
 };
-
 
 /**
  * instanceMethods
@@ -120,6 +118,7 @@ User.prototype.addToCart = async function (product) {
   let newItem = cart.products.find((item) => item.id === product.id);
   if (newItem) {
     newItem.Order_Product.quantity++;
+    await cart.save();
     // let totalPrice = (newItem.Order_Product.quantity * newItem.price)
     // newItem.Order_Product.totalPrice = totalPrice
   } else {
@@ -134,7 +133,6 @@ User.prototype.removeFromCart = async function (product) {
   await cart.removeProduct(product);
   return this.getCart();
 };
-
 
 /**
  * hooks
