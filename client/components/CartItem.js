@@ -20,11 +20,16 @@ class CartItem extends React.Component {
     const { quantity, subTotal } = this.state;
     this.setState({ quantity: quantity + 1 });
     const sum = (this.state.quantity * this.props.product.price) / 100;
+    console.log('sum,', sum);
     this.setState({ subTotal: sum });
     this.props.totalSum(subTotal);
   }
   decreaseQuantity() {
     const { quantity, subTotal } = this.state;
+    if (quantity === 1) {
+      //remove item from cart: need axios
+      console.log("removed item from cart");
+    }
     this.setState({ quantity: quantity - 1 });
     const sum = (this.state.quantity * this.props.product.price) / 100;
     this.setState({ subTotal: sum });
