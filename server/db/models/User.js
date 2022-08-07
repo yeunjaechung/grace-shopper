@@ -2,7 +2,9 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const axios = require("axios");
+
+const Order = require("./Order");
+const Product = require("./Product");
 
 const SALT_ROUNDS = 5;
 
@@ -75,8 +77,10 @@ User.authenticate = async function ({ email, password }) {
 
 User.findByToken = async function (token) {
   try {
-    const { id } = await jwt.verify(token, process.env.JWT);
-    const user = User.findByPk(id);
+
+    const { id } = jwt.verify(token, process.env.JWT);
+    const user = await User.findByPk(id);
+
     if (!user) {
       throw "nooo";
     }
@@ -87,6 +91,50 @@ User.findByToken = async function (token) {
     throw error;
   }
 };
+
+
+/**
+ * instanceMethods
+ */
+
+User.prototype.getCart = async function () {
+  const where = {
+    userId: this.id,
+    status: "open",
+  };
+  let cart = await Order.findOne({
+    where,
+  });
+  if (!cart) {
+    cart = await Order.create(where);
+  }
+  return Order.findByPk(cart.id, {
+    include: {
+      model: Product,
+    },
+  });
+};
+
+User.prototype.addToCart = async function (product) {
+  const cart = this.getCart();
+  let newItem = cart.products.find((item) => item.id === product.id);
+  if (newItem) {
+    newItem.Order_Product.quantity++;
+    // let totalPrice = (newItem.Order_Product.quantity * newItem.price)
+    // newItem.Order_Product.totalPrice = totalPrice
+  } else {
+    await cart.addProduct(product);
+    // save newItem.Order_Product.unitPrice = product.price
+  }
+  return this.getcart();
+};
+
+User.prototype.removeFromCart = async function (product) {
+  const cart = this.getCart();
+  await cart.removeProduct(product);
+  return this.getCart();
+};
+
 
 /**
  * hooks
