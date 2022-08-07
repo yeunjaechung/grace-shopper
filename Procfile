@@ -1,2 +1,2 @@
-web: npm run seed build:dev & npm run start-server
+web: npm run start
 # seed: node script/seed.js
