@@ -12,7 +12,8 @@ const Order_Products = db.define("Order_Product", {
     type: Sequelize.INTEGER,
     validate: {
       min: 1
-    }
+    },
+    defaultValue: 1
   },
   //Price is calculated in pennies
   unitPrice: {
