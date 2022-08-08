@@ -1,8 +1,6 @@
 const router = require("express").Router();
 const {
-
   models: { User, Product, Order },
-
 } = require("../db");
 module.exports = router;
 
@@ -27,7 +25,6 @@ router.get("/cart", async (req, res, next) => {
     const user = await User.findByToken(req.headers.authorization);
     const cart = await user.getCart();
     res.send(cart);
-
   } catch (err) {
     next(err);
   }
@@ -42,7 +39,6 @@ router.get("/orders", async (req, res, next) => {
       where: {
         status: "closed",
         userId: user.id,
-
       },
       include: {
         model: Product,
@@ -78,8 +74,6 @@ router.post("/newUser", async (req, res, next) => {
 
     await newUser.getCart();
     res.status(201).send(newUser);
-
-
   } catch (err) {
     next(err);
   }
@@ -106,12 +100,12 @@ router.put("/checkout", async (req, res, next) => {
 //add item to cart:
 // Quick question - Do we actually need this route? Since we are going to make an as
 
-router.put("/addToCart", async (req, res, next) => {
+router.post("/addToCart", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
-    const cart = await user.addToCart(req.body);
-
-    res.send(cart);
+    const productId = req.body.id;
+    await user.addToCart(productId);
+ res.send('hi')
   } catch (err) {
     next(err);
   }
@@ -123,7 +117,6 @@ router.put("/removeToCart", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
     const cart = await user.removeFromCart(req.body);
-
     res.send(cart);
   } catch (err) {
     next(err);

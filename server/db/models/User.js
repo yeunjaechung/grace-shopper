@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 
 const Order = require("./Order");
 const Product = require("./Product");
+const Order_Products = require("../index");
 
 const SALT_ROUNDS = 5;
 
@@ -113,20 +114,34 @@ User.prototype.getCart = async function () {
   });
 };
 
-User.prototype.addToCart = async function (product) {
-  const cart = this.getCart();
-  let newItem = cart.products.find((item) => item.id === product.id);
-  if (newItem) {
-    newItem.Order_Product.quantity++;
-    await cart.save();
-    // let totalPrice = (newItem.Order_Product.quantity * newItem.price)
-    // newItem.Order_Product.totalPrice = totalPrice
-  } else {
-    await cart.addProduct(product);
-    // save newItem.Order_Product.unitPrice = product.price
-  }
-  return this.getcart();
+User.prototype.getProduct = async function (productId) {
+  return Product.findByPk(productId, {
+    include: {
+      model: Order
+    }
+  });
 };
+
+User.prototype.getCurrentQty = async function (product, cart) {
+  const currentQty = product.dataValues.orders[0].dataValues.Order_Product.dataValues.quantity;
+  return currentQty
+}
+
+
+User.prototype.addToCart = async function (productId) {
+    let cart = await this.getCart();
+    let product = await this.getProduct(productId);
+    let productsInCartIDs = cart.products.map(product => product.dataValues.id);
+    let productIsNotInCartAlready = !productsInCartIDs.includes(productId);
+  if (productIsNotInCartAlready) { cart.addProduct(product, {through: {quantity: 1, unitPrice: product.price, totalPrice: product.price}}) }
+    else {
+      const currentQtyInCart = await this.getCurrentQty(product, cart);
+      const updatedQty = currentQtyInCart + 1;
+      const updatedPrice = product.price;
+      const updatedTotalPrice = updatedQty * updatedPrice;
+      cart.addProduct(product, {through: {quantity: updatedQty, unitPrice: updatedPrice, totalPrice: updatedTotalPrice}})
+    }
+}
 
 User.prototype.removeFromCart = async function (product) {
   const cart = this.getCart();

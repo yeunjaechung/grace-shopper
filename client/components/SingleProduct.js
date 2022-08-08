@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchProduct } from "../store/singleProduct";
+import { fetchProduct, addItem } from "../store/singleProduct";
 
 export class SingleProduct extends React.Component {
   componentDidMount() {
@@ -9,8 +9,13 @@ export class SingleProduct extends React.Component {
   }
   render() {
     const product = this.props.product;
-    return <div> Product Name: {product.name}
-    <button>Add to Cart</button></div>;
+    return (
+      <div>
+        {" "}
+        Product Name: {product.name}
+        <button onClick={() => this.props.addItem(product)}>Add to Cart</button>
+      </div>
+    );
   }
 }
 
@@ -23,6 +28,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchProduct: (productId) => dispatch(fetchProduct(productId)),
+    addItem: (product) => dispatch(addItem(product)),
   };
 };
 

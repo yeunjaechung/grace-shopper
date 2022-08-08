@@ -5,10 +5,8 @@ import { fetchCart } from "../store/order";
 import CartItem from "./CartItem";
 
 class Cart extends React.Component {
-
-  constructor(props) {
-    super(props);
-
+  constructor() {
+    super();
     this.state = {
       total: 0,
     };
@@ -30,17 +28,15 @@ class Cart extends React.Component {
         {products.map((product, index) => {
           return (
             <CartItem
-              product={product}
               key={index}
+              product={product}
               total={this.state.total}
               totalSum={this.totalSum}
-
             />
           );
         })}
         <h4>Total: ${this.state.total}</h4>
       </ul>
-
     );
   }
 }
