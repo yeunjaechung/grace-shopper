@@ -65,7 +65,7 @@ User.prototype.generateToken = function () {
 /**
  * classMethods
  */
-User.prototype.authenticate = async function ({ email, password }) {
+User.authenticate = async function ({ email, password }) {
   const user = await this.findOne({ where: { email } });
   if (!user || !(await user.correctPassword(password))) {
     const error = Error("Incorrect email/password");
@@ -75,7 +75,7 @@ User.prototype.authenticate = async function ({ email, password }) {
   return user.generateToken();
 };
 
-User.protoype.findByToken = async function (token) {
+User.findByToken = async function (token) {
   try {
     const { id } = jwt.verify(token, process.env.JWT);
     const user = await User.findByPk(id);
