@@ -86,54 +86,63 @@ async function seed() {
     product9,
   ] = await Promise.all([
     Product.create({
+      quantity: 1,
       name: "12",
       price: 12,
       flavorText: "12",
       imageSmall: "https://images.pokemontcg.io/pl1/1.png",
     }),
     Product.create({
+      quantity: 1,
       name: "21",
       price: 21,
       flavorText: "21",
       imageSmall: "https://images.pokemontcg.io/det1/1.png",
     }),
     Product.create({
+      quantity: 1,
       name: "34",
       price: 34,
       flavorText: "34",
       imageSmall: "https://images.pokemontcg.io/mcd19/1.png",
     }),
     Product.create({
+      quantity: 1,
       name: "93",
       price: 93,
       flavorText: "93",
       imageSmall: "https://images.pokemontcg.io/dv1/1.png",
     }),
     Product.create({
+      quantity: 1,
       name: "56",
       price: 56,
       flavorText: "56",
       imageSmall: "https://images.pokemontcg.io/xy5/1.png",
     }),
     Product.create({
+      quantity: 1,
       name: "61",
       price: 61,
       flavorText: "61",
       imageSmall: "https://images.pokemontcg.io/ex7/1.png",
     }),
     Product.create({
+      quantity: 1,
       name: "17",
       price: 17,
       flavorText: "17",
       imageSmall: "https://images.pokemontcg.io/ecard2/H1.png",
     }),
     Product.create({
+      quantity: 1,
       name: "50",
       price: 50,
       flavorText: "50",
       imageSmall: "https://images.pokemontcg.io/ex3/1.png",
     }),
     Product.create({
+      quantity: 1,
       name: "81",
       price: 81,
       flavorText: "81",
@@ -141,10 +150,16 @@ async function seed() {
     }),
   ]);
   const yjOrder1 = await yj.getCart();
-  const yjOrder2 = await Order.create({ status: "closed", userId: 3 });
+  const yjOrder2 = await Order.create({ status: "closed", userId: yj.id });
   const ethanOrder1 = await ethan.getCart();
-  const ethanOrder2 = await Order.create({ status: "closed", userId: 4 });
-  const ethanOrder3 = await Order.create({ status: "closed", userId: 4 });
+  const ethanOrder2 = await Order.create({
+    status: "closed",
+    userId: ethan.id,
+  });
+  const ethanOrder3 = await Order.create({
+    status: "closed",
+    userId: ethan.id,
+  });
   await yjOrder1.addProducts([product1, product2, product5, product3]);
 
   await yjOrder2.addProducts([product6, product3, product5, product9]);

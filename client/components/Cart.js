@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchCart, addToGuestCart } from "../store/order";
@@ -10,30 +10,25 @@ class Cart extends React.Component {
     this.state = {
       total: 0,
     };
-    this.totalSum = this.totalSum.bind(this);
   }
 
-  totalSum(subTotal) {
-    this.setState({ total: this.state.total + subTotal });
-  }
-
-  //   componentDidMount() {
-  //     this.props.fetchCart();
-  //     this.setState({ ...this.state, products: this.props.cart.products });
+  // componentDidUpdate(prevProps) {
+  //   if (!prevProps.cart.products && this.props.cart.product) {
+  //     const products = this.props.cart.products;
+  //     let tempArr = products.map((product) => {
+  //       return product.Order_Product.quantity * product.price;
+  //     });
+  //     let sum = tempArr.reduce((accum, curr) => accum + curr);
+  //     this.setState({ total: sum });
   //   }
+  // }
+
   render() {
     const products = this.props.cart.products || [];
     return (
       <ul>
         {products.map((product, index) => {
-          return (
-            <CartItem
-              key={index}
-              product={product}
-              total={this.state.total}
-              totalSum={this.totalSum}
-            />
-          );
+          return <CartItem product={product} key={index} />;
         })}
         <h4>Total: ${this.state.total}</h4>
       </ul>
@@ -43,7 +38,7 @@ class Cart extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    cart: state.order,
+    cart: state.cart,
     auth: state.auth,
   };
 };

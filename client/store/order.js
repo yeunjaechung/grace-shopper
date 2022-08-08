@@ -4,10 +4,10 @@ const TOKEN = "token";
 
 // Actions
 const GET_CART = "GET_CART";
+const ADD_ITEM = "ADD_ITEM";
 const REMOVE_ITEM = "REMOVE_ITEM";
+const UPDATE_ORDER_PRODCUTS = "UPDATE_ORDER_PRODCUTS";
 const GUEST_CART = "GUEST_CART";
-
-// const UPDATE_ORDER_PRODCUTS = "UPDATE_ORDER_PRODCUTS";
 
 // Action Creators
 const _getCart = (cart) => ({
@@ -15,21 +15,29 @@ const _getCart = (cart) => ({
   cart,
 });
 
-// const _updateOrderProducts = (update) => ({
-//   type: UPDATE_ORDER_PRODCUTS,
-//   update,
-// });
+const _updateOrderProducts = (cart) => ({
+  type: UPDATE_ORDER_PRODCUTS,
+  cart,
+});
+
+const _addItem = (cart) => ({
+  type: ADD_ITEM,
+  cart,
+});
+
 
 const _removeItem = (cart) => ({
   type: REMOVE_ITEM,
   cart,
 });
 
+
 // Action Creators
 const _guestCart = (cart) => ({
   type: GUEST_CART,
   cart,
 });
+
 
 // Thunks
 export const fetchCart = () => {
@@ -43,6 +51,36 @@ export const fetchCart = () => {
     dispatch(_getCart(cart));
   };
 };
+
+
+export const updateOrderProduct = (product, updateInfo) => {
+  const token = window.localStorage.getItem(TOKEN);
+  return async (dispatch) => {
+    const { data: cart } = await axios.post(
+      "/api/users/updateOrderProduct",
+      { product, updateInfo },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    dispatch(_updateOrderProducts(cart));
+  };
+};
+
+export const addItem = (product) => {
+  const token = window.localStorage.getItem(TOKEN);
+  return async function (dispatch) {
+    const { data: cart } = await axios.post(`/api/users/addToCart`, product, {
+      headers: {
+        authorization: token,
+      },
+    });
+    dispatch(_addItem(cart));
+  };
+};
+
 
 export const removeItem = (product) => {
   const token = window.localStorage.getItem(TOKEN);
@@ -77,7 +115,11 @@ export default function orderReducer(state = {}, action) {
       return action.cart;
     case GET_CART:
       return action.cart;
+    case ADD_ITEM:
+      return action.cart;
     case REMOVE_ITEM:
+      return action.cart;
+    case UPDATE_ORDER_PRODCUTS:
       return action.cart;
     default:
       return state;
