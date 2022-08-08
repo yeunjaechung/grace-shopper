@@ -47,11 +47,10 @@ class Routes extends Component {
             <Route path="/checkout" component={Checkout} />
             <Route path="/cart/payment" component={Payment} />
             <Route exact path="/cart" component={Cart} />
-
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" component={Login} />
+            <Route exact path="/" component={Login} />
             <Route path="/products" component={AllProducts} />
             <Route
               exact

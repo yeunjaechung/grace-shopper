@@ -6,73 +6,89 @@ import { fetchProduct } from "../store/singleProduct";
 class CartItem extends React.Component {
   constructor(props) {
     super(props);
+    this.inputRef = React.createRef();
     this.state = {
       quantity: 1,
-      subTotal: 0,
-      product: this.props.product ? this.props.porduct : {},
+      subTotal: this.props.product.price / 100,
+      temp: 1,
     };
-    this.increaseQuantity = this.increaseQuantity.bind(this);
-    this.decreaseQuantity = this.decreaseQuantity.bind(this);
     this.handleQuantity = this.handleQuantity.bind(this);
-  }
-
-  increaseQuantity() {
-    const { quantity, subTotal } = this.state;
-    this.setState({ quantity: quantity + 1 });
-    const sum = (this.state.quantity * this.props.product.price) / 100;
-    console.log('sum,', sum);
-    this.setState({ subTotal: sum });
-    this.props.totalSum(subTotal);
-  }
-  decreaseQuantity() {
-    const { quantity, subTotal } = this.state;
-    if (quantity === 1) {
-      //remove item from cart: need axios
-      console.log("removed item from cart");
-    }
-    this.setState({ quantity: quantity - 1 });
-    const sum = (this.state.quantity * this.props.product.price) / 100;
-    this.setState({ subTotal: sum });
-    this.props.totalSum(subTotal);
+    this.handleClick = this.handleClick.bind(this);
+    this.selectSubtotal = this.selectSubtotal.bind(this);
+    this.clickSubTotal = this.clickSubTotal.bind(this);
   }
 
   handleQuantity(evt) {
-    this.setState({ quantity: evt.target.value });
+    let number = Number([evt.target.value]);
+    this.setState({ quantity: number });
   }
 
-  componentDidMount() {
-    const id = this.props.product.id;
-    this.props.getProduct(id);
-    const sum = (this.state.quantity * this.props.product.price) / 100;
+  selectSubtotal(evt) {
+    let quantity = Number([evt.target.value]);
+    const sum = (quantity * this.props.product.price) / 100;
+
     this.setState({ subTotal: sum });
-    this.props.totalSum(this.state.subTotal);
+    this.props.totalSum(sum);
   }
-  // componentDidUpdate(prevProps) {
-  //   if (!prevProps.product.id && this.props.product.id) {
-  //     this.props.getProduct(id);
-  //   }
-  // }
+
+  handleClick() {
+    let number = Number(this.inputRef.current.value);
+    this.setState({ quantity: number });
+  }
+
+  clickSubTotal() {
+    let quantity = Number(this.inputRef.current.value);
+    const sum = (quantity * this.props.product.price) / 100;
+    this.setState({ subTotal: sum });
+    this.props.totalSum(sum);
+  }
 
   render() {
     const product = this.props.product;
     const { quantity } = this.state;
     console.log(product);
-    const { increaseQuantity, decreaseQuantity, handleQuantity } = this;
+    const { handleClick, handleQuantity, selectSubtotal, clickSubTotal } = this;
+    const renderCheck =
+      quantity < 10 ? (
+        <select
+          value={quantity}
+          onChange={(evt) => {
+            handleQuantity(evt);
+            selectSubtotal(evt);
+          }}
+        >
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10+</option>
+        </select>
+      ) : (
+        <div>
+          <input ref={this.inputRef} type="text" defaultValue={quantity} />
+          <button
+            onClick={() => {
+              handleClick();
+              clickSubTotal();
+            }}
+          >
+            Update
+          </button>
+        </div>
+      );
+
     return (
       <div>
         <Link to={`/products/${product.id}`}>
           <img src={product.imageSmall} />
         </Link>
-        <button type="button" onClick={increaseQuantity}>
-          +
-        </button>
-        <form>
-          <input onChange={handleQuantity} value={quantity} />
-        </form>
-        {/* <h4>{this.state.quantity}</h4> */}
-        <button type="button" onClick={decreaseQuantity}>
-          -
-        </button>
+        <label>Quantity:</label>
+        {renderCheck}
         <h4>Subtotal: ${this.state.subTotal}</h4>
       </div>
     );
