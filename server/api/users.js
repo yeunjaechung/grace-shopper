@@ -100,11 +100,12 @@ router.put("/checkout", async (req, res, next) => {
 //add item to cart:
 // Quick question - Do we actually need this route? Since we are going to make an as
 
-router.put("/addToCart", async (req, res, next) => {
+router.post("/addToCart", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
-    const cart = await user.addToCart(req.body);
-    res.send(cart);
+    const productId = req.body.id;
+    await user.addToCart(productId);
+ res.send('hi')
   } catch (err) {
     next(err);
   }

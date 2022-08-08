@@ -28,8 +28,8 @@ export const fetchProduct = (productId) => {
 export const addItem = (product) => {
   const token = window.localStorage.getItem(TOKEN);
   return async function (dispatch) {
-    const { data: newItem } = await axios.put(
-      `/api/users/addToCart/`,
+    const response = await axios.post(
+      `/api/users/addToCart`,
       product,
       {
         headers: {
@@ -37,7 +37,8 @@ export const addItem = (product) => {
         },
       }
     );
-    dispatch(_addItem(newItem));
+  
+    // dispatch(_addItem(newItem));
   };
 };
 

@@ -46,7 +46,6 @@ class CartItem extends React.Component {
   render() {
     const product = this.props.product;
     const { quantity } = this.state;
-    console.log(product);
     const { handleClick, handleQuantity, selectSubtotal, clickSubTotal } = this;
     const renderCheck =
       quantity < 10 ? (

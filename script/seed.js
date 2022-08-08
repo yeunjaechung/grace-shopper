@@ -19,7 +19,7 @@ async function seed() {
   // Creating cards
 
   const cards = await pokemon.card
-    .all({ q: "nationalPokedexNumbers:[1 to 25]" })
+    .all({ q: "nationalPokedexNumbers:[1 to 2]" })
     .then((cards) => {
       return cards;
     });
