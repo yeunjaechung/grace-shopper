@@ -66,7 +66,7 @@ export default function singleProductReducer(state = initialState, action) {
     case ADD_ITEM:
       return action.product;
       case DELETE_ITEM:
-        return initialState;
+        return null;
     default:
       return state;
   }

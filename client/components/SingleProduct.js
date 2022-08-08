@@ -26,6 +26,10 @@ export class SingleProduct extends React.Component {
     // let userType = this.state.auth.userType || '';
     console.log('THIS props in render', this.props);
     const product = this.props.product;
+    if(!product){
+      return <div>Pokemon Deleted! Go back to all products...
+      </div>
+    }
     if(this.props.user.userType === 'admin'){  
       return (
         <div>
