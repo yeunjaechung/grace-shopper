@@ -7,17 +7,18 @@ constructor(){
     super();
     this.state = {
         name: '',
-        price: null,
+        price: 0,
         flavorText: '',
-        imageSmall: '',
-        imageLarge: '',
-        nationalPokedexNumbers: null
+        // imageSmall: '',
+        // imageLarge: '',
+        nationalPokedexNumbers: undefined
     }
     this.submitHandler = this.submitHandler.bind(this);
     this.handleChange = this.handleChange.bind(this);
 }
-submitHandler(){
-    this.props.createNewProduct(this.state)
+submitHandler(event){
+    event.preventDefault();
+    this.props.createProduct(this.state)
 }
 
 handleChange(event){
@@ -35,10 +36,10 @@ render(){
                 <input value={this.state.price} type="text" name="price" onChange={this.handleChange}></input>
                 <label>Description:</label>
                 <input value={this.state.flavorText} type="text" name="flavorText" onChange={this.handleChange}></input>
-                <label>Image Small:</label>
+                {/* <label>Image Small:</label>
                 <input value={this.state.imageSmall} type="text" name="imageSmall" onChange={this.handleChange}></input>
                 <label>Image Large:</label>
-                <input value={this.state.imageLarge} type="text" name="imageLarge" onChange={this.handleChange}></input>
+                <input value={this.state.imageLarge} type="text" name="imageLarge" onChange={this.handleChange}></input> */}
                 <label>National Pokedex Number:</label>
                 <input value={this.state.nationalPokedexNumbers} type="text" name="nationalPokdedexNumbers" onChange={this.handleChange}></input>
                 <input type="submit" value="Submit" />

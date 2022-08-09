@@ -25,3 +25,17 @@ form div {
   margin: 1em;
   justify-content: space-around;
 }
+
+.allProducts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: #339CFF;
+  border-radius: 5px;
+}
+
+.productChild {
+max-width: 245;
+max-height: 342;
+margin: 5px;
+}

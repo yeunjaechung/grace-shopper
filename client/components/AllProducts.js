@@ -18,9 +18,10 @@ export class AllProducts extends React.Component {
         <div>
           <h1>All Products Component</h1>
           <AddProductForm />
-          <div>
+          <hr />
+          <div className="allProducts">
             {products.map((product) => (
-              <div key={product.id}>
+              <div className="productChild" key={product.id}>
                 <h1> {product.name} </h1>{" "}
                 <img src={product.imageSmall} />
                 <Link to={`/products/${product.id}`} key={product.id}>
@@ -35,7 +36,7 @@ export class AllProducts extends React.Component {
       return (
         <div>
           <h1>All Products Component</h1>
-          <div>
+          <div className="allProducts">
             {products.map((product) => (
               <div key={product.id}>
                 <h1> {product.name} </h1>{" "}
