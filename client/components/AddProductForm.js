@@ -14,6 +14,7 @@ constructor(){
         nationalPokedexNumbers: null
     }
     this.submitHandler = this.submitHandler.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 }
 submitHandler(){
     this.props.createNewProduct(this.state)
@@ -40,6 +41,7 @@ render(){
                 <input value={this.state.imageLarge} type="text" name="imageLarge" onChange={this.handleChange}></input>
                 <label>National Pokedex Number:</label>
                 <input value={this.state.nationalPokedexNumbers} type="text" name="nationalPokdedexNumbers" onChange={this.handleChange}></input>
+                <input type="submit" value="Submit" />
             </form>
         </div>
     )
