@@ -1,10 +1,18 @@
 import axios from "axios";
 
 const FETCH_ALL_PRODUCTS = "FETCH_ALL_PRODUCTS";
+const CREATE_PRODUCT = 'CREATE PRODUCT';
 
 export const setProducts = (products) => {
   return { type: FETCH_ALL_PRODUCTS, products };
 };
+
+export const createProduct = (product) => {
+  return {
+    type: CREATE_PRODUCT,
+    product
+  }
+}
 
 export const fetchProducts = () => {
   return async function (dispatch) {
@@ -14,6 +22,13 @@ export const fetchProducts = () => {
   };
 };
 
+export const createNewProduct = (product) => {
+  return async function(dispatch) {
+    const {data: newProduct} = await axios.post(`/api/products/new-product`, product);
+    dispatch(createProduct(newProduct));
+  }
+}
+
 const initialState = [];
 
 // Take a look at app/redux/index.js to see where this reducer is
@@ -22,6 +37,8 @@ export default function productsReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_ALL_PRODUCTS:
       return action.products;
+      case CREATE_PRODUCT:
+        return [...state, action.product];
     default:
       return state;
   }
