@@ -71,9 +71,20 @@ router.post("/newUser", async (req, res, next) => {
       shippingAddress,
       billingAddress,
     });
-
     await newUser.getCart();
     res.status(201).send(newUser);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//editing a User
+router.put("/userInfo", async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+    console.log('req.body', req.body);
+    await user.update(req.body);
+    res.status(200).send(user);
   } catch (err) {
     next(err);
   }
