@@ -149,51 +149,51 @@ async function seed() {
       imageSmall: "https://images.pokemontcg.io/hgss4/1.png",
     }),
   ]);
-  // const yjOrder1 = await yj.getCart();
-  // const yjOrder2 = await Order.create({ status: "closed", userId: yj.id });
-  // const ethanOrder1 = await ethan.getCart();
-  // const ethanOrder2 = await Order.create({
-  //   status: "closed",
-  //   userId: ethan.id,
-  // });
-  // const ethanOrder3 = await Order.create({
-  //   status: "closed",
-  //   userId: ethan.id,
-  // });
-  // await yjOrder1.addProducts([product1, product2, product5, product3]);
+  const yjOrder1 = await yj.getCart();
+  const yjOrder2 = await Order.create({ status: "closed", userId: yj.id });
+  const ethanOrder1 = await ethan.getCart();
+  const ethanOrder2 = await Order.create({
+    status: "closed",
+    userId: ethan.id,
+  });
+  const ethanOrder3 = await Order.create({
+    status: "closed",
+    userId: ethan.id,
+  });
+  await yjOrder1.addProducts([product1, product2, product5, product3]);
 
+  await yjOrder2.addProducts([
+    product6,
+    product3,
+    product5,
+    product9,
+    product2,
+  ]);
+  await ethanOrder1.addProducts([
+    product6,
+    product3,
+    product5,
+    product9,
+    product7,
+    product8,
+    product2,
+  ]);
+  await ethanOrder2.addProducts([
+    product6,
+    product3,
+    product5,
+    product4,
+    product2,
+  ]);
+  await ethanOrder3.addProducts([
+    product2,
+    product7,
+    product1,
+    product7,
+    product4,
+    product6,
+  ]);
 
-  // await yjOrder2.addProducts([
-  //   product6,
-  //   product3,
-  //   product5,
-  //   product9,
-  //   product2,
-  // ]);
-  // await ethanOrder1.addProducts([
-  //   product6,
-  //   product3,
-  //   product5,
-  //   product9,
-  //   product7,
-  //   product8,
-  //   product2,
-  // ]);
-  // await ethanOrder2.addProducts([
-  //   product6,
-  //   product3,
-  //   product5,
-  //   product4,
-  //   product2,
-  // ]);
-  // await ethanOrder3.addProducts([
-  //   product2,
-  //   product7,
-  //   product1,
-  //   product7,
-  //   product4,
-  //   product6,
-  // ]);
 
   console.log(`seeded successfully`);
 }

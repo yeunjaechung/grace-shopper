@@ -6,7 +6,7 @@ const TOKEN = "token";
 const GET_CART = "GET_CART";
 const ADD_ITEM = "ADD_ITEM";
 const REMOVE_ITEM = "REMOVE_ITEM";
-const UPDATE_ORDER_PRODUCTS = "UPDATE_ORDER_PRODCUTS";
+const UPDATE_ORDER_PRODUCTS = "UPDATE_ORDER_PRODUCTS";
 const GUEST_CART = "GUEST_CART";
 
 // Action Creators
@@ -80,7 +80,7 @@ export const addItem = (product) => {
 export const removeItem = (product) => {
   const token = window.localStorage.getItem(TOKEN);
   return async (dispatch) => {
-    const { data: remove } = await axios.post(
+    const { data: cart } = await axios.post(
       "/api/users/removeToCart",
       product,
       {
@@ -89,7 +89,7 @@ export const removeItem = (product) => {
         },
       }
     );
-    dispatch(_removeItem(remove));
+    dispatch(_removeItem(cart));
   };
 };
 

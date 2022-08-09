@@ -1,12 +1,15 @@
 import axios from "axios";
 
+// ACTIONS
 const FETCH_ALL_PRODUCTS = "FETCH_ALL_PRODUCTS";
 const CREATE_PRODUCT = 'CREATE PRODUCT';
 
-export const setProducts = (products) => {
+// ACTION CREATORS
+const setProducts = (products) => {
   return { type: FETCH_ALL_PRODUCTS, products };
 };
 
+// THUNKS
 export const createProduct = (product) => {
   return {
     type: CREATE_PRODUCT,

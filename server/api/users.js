@@ -123,7 +123,7 @@ router.post("/addToCart", async (req, res, next) => {
 
 //remove item from cart
 
-router.put("/removeToCart", async (req, res, next) => {
+router.post("/removeToCart", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
     const cart = await user.removeFromCart(req.body);

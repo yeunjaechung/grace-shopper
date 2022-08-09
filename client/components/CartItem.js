@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchProduct } from "../store/singleProduct";
-import { updateOrderProduct } from "../store/order";
+import { updateOrderProduct, removeItem } from "../store/order";
 
 class CartItem extends React.Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class CartItem extends React.Component {
     };
     this.handleQuantity = this.handleQuantity.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleQuantity(evt) {
@@ -41,6 +42,10 @@ class CartItem extends React.Component {
     this.setState({ quantity, totalPrice });
   }
 
+  handleDelete() {
+    this.props.removeProduct(this.props.product);
+  }
+
   componentDidMount() {
     const quantity = this.props.product.Order_Product.quantity;
     const totalPrice = quantity * this.props.product.price;
@@ -50,7 +55,7 @@ class CartItem extends React.Component {
   render() {
     const { product } = this.props;
     const { quantity, unitPrice, totalPrice } = this.state;
-    const { handleClick, handleQuantity } = this;
+    const { handleClick, handleQuantity, handleDelete } = this;
     const renderCheck =
       quantity < 10 ? (
         <select
@@ -94,6 +99,7 @@ class CartItem extends React.Component {
         <br />
         <span>Unit Price: ${unitPrice / 100}</span>
         <h3>Subtotal: ${totalPrice / 100}</h3>
+        <button onClick={handleDelete}>Delete</button>
       </div>
     );
   }
@@ -104,6 +110,7 @@ const mapDispatchToProps = (dispatch) => {
     getProduct: (id) => dispatch(fetchProduct(id)),
     updateOrder: (product, updateInfo) =>
       dispatch(updateOrderProduct(product, updateInfo)),
+    removeProduct: (product) => dispatch(removeItem(product)),
   };
 };
 

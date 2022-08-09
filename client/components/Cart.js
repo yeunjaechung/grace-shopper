@@ -12,17 +12,18 @@ class Cart extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   if (this.props.cart.product[0]) {
-  //     let total = this.props.cart.products.reduce(function (accum, obj) {
-  //       accum + obj.Order_Product.totalPrice;
-  //     }, 0);
-  //     this.setState({ total });
-  //   }
-  // }
-
   render() {
     let products = this.props.cart.products || [];
+    const buttonCheck =
+      products.length > 0 ? (
+        <Link to={"/checkout"}>
+          <button>Proceed to checkout</button>
+        </Link>
+      ) : (
+        <Link to={"/products"}>
+          <button>Explore All Items!</button>
+        </Link>
+      );
     products = products.sort(function (a, b) {
       return (
         new Date(b.Order_Product.createdAt) -
@@ -44,9 +45,7 @@ class Cart extends React.Component {
           })}
           <h1>Total: ${total / 100}</h1>
         </ul>
-        <Link to={"/checkout"}>
-          <button>Proceed to checkout</button>
-        </Link>
+        {buttonCheck}
       </div>
     );
   }
