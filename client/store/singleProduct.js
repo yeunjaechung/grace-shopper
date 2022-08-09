@@ -31,12 +31,14 @@ export const fetchProduct = (productId) => {
 export const deleteProduct = (product) => {
   return async (dispatch) => {
 
+
     const { data: deletedProduct } = await axios.delete(
       `/api/products/${product.id}`
     );
     dispatch(deleteItem(deletedProduct));
   };
 };
+
 const initialState = {};
 
 export default function singleProductReducer(state = initialState, action) {

@@ -18,9 +18,59 @@ export class SingleProduct extends React.Component {
     const productId = this.props.match.params.productId;
     this.props.fetchProduct(productId);
   }
-  // componentDidUpdate(){
-  //   this.setState({userType: this.state.auth.userType});
-  // }
+  addedToCart(){
+    const productItem = {
+      fakeOrderProduct: {
+        productId: this.props.product.id,
+        quantity: 1,
+        unitPrice: this.props.product.price,
+      },
+      id: this.props.product.id,
+      name: this.props.product.name,
+      price: this.props.product.price,
+      imageLarge: this.props.product.imageLarge,
+      imageSmall: this.props.product.imageSmall,
+      flavorText: this.props.product.flavorText,
+      nationalPokedexNumber: this.props.product.nationalPokedexNumber,
+    };
+    console.log("productItem", productItem);
+    if (localStorage.getItem(`${this.props.product.id}`)) {
+      let gotItem = localStorage.getItem(`${this.props.product.id}`)
+      const parsedItem = JSON.parse(gotItem);
+      const newQuantity = parsedItem.fakeOrderProduct.quantity + 1;
+      console.log("newQuantity", newQuantity);
+      const addingItem = {
+        fakeOrderProduct: {
+          productId: this.props.product.id,
+          quantity: newQuantity,
+          unitPrice: this.props.product.price,
+        },
+        id: this.props.product.id,
+        name: this.props.product.name,
+        price: this.props.product.price,
+        imageLarge: this.props.product.imageLarge,
+        imageSmall: this.props.product.imageSmall,
+        flavorText: this.props.product.flavorText,
+        nationalPokedexNumber: this.props.product.nationalPokedexNumber,
+      };
+      let updatedStringItem = JSON.stringify(addingItem);
+      localStorage.setItem(`${this.props.product.id}`, updatedStringItem)
+    } else {
+      let stringItem = JSON.stringify(productItem);
+      localStorage.setItem(`${this.props.product.id}`, stringItem)
+    }
+    
+  }
+
+  guestCartLoader() {
+    const productItem = localStorage.getItem(`${this.props.product.id}`);
+    const parsedItem = JSON.parse(productItem);
+    this.props.addToGuestCart(parsedItem);
+  }
+
+  componentDidUpdate() {
+  }
+
   isAdmin(userType) {
     return userType === "admin" ? true : false;
   }
@@ -30,8 +80,6 @@ export class SingleProduct extends React.Component {
     window.location.reload();
   }
   render() {
-    // let userType = this.state.auth.userType || '';
-    console.log("THIS props in render", this.props);
     const product = this.props.product;
     if(!product){
       return <div>Pokemon Deleted! Go back to all products...
@@ -59,12 +107,16 @@ export class SingleProduct extends React.Component {
         </div>
       );
     } else {
+      console.log("THIS props in render", product);
       return (
         <div>
           <img src={product.imageSmall}></img>
           <h1>Product Name: {product.name}</h1>
           <h2>{product.price}</h2>
-          <button type="button" onClick={() => this.props.addItem(product)}>
+          <button
+            type="button"
+            onClick={() => this.addedToCart()}
+          >
             Add to Cart
           </button>
         </div>
