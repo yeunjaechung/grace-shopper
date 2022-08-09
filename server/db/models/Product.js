@@ -21,9 +21,19 @@ const Product = db.define("product", {
   },
   imageSmall: {
     type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    },
+    defaultValue: 'https://i.pinimg.com/originals/04/82/f2/0482f251621cbe3a67362ef8a76e6bbd.jpg'
   },
   imageLarge: {
     type: Sequelize.STRING,
+    allowNull: false,
+    validate:{
+      notEmpty: true
+    },
+    defaultValue: 'https://i.pinimg.com/originals/04/82/f2/0482f251621cbe3a67362ef8a76e6bbd.jpg'
   },
   nationalPokedexNumbers: {
     type: Sequelize.INTEGER,
