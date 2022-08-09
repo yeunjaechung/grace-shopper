@@ -6,7 +6,7 @@ const TOKEN = "token";
 const GET_CART = "GET_CART";
 const ADD_ITEM = "ADD_ITEM";
 const REMOVE_ITEM = "REMOVE_ITEM";
-const UPDATE_ORDER_PRODUCTS = "UPDATE_ORDER_PRODUCTS";
+const UPDATE_ORDER_PRODUCTS = "UPDATE_ORDER_PRODCUTS";
 const GUEST_CART = "GUEST_CART";
 
 // Action Creators
@@ -67,6 +67,7 @@ export const updateOrderProduct = (product, updateInfo) => {
 
 export const addItem = (product) => {
   const token = window.localStorage.getItem(TOKEN);
+  console.log(window.localStorage)
   return async function (dispatch) {
     const { data: cart } = await axios.post(`/api/users/addToCart`, product, {
       headers: {
@@ -80,7 +81,7 @@ export const addItem = (product) => {
 export const removeItem = (product) => {
   const token = window.localStorage.getItem(TOKEN);
   return async (dispatch) => {
-    const { data: cart } = await axios.post(
+    const { data: remove } = await axios.post(
       "/api/users/removeToCart",
       product,
       {
@@ -89,15 +90,13 @@ export const removeItem = (product) => {
         },
       }
     );
-    dispatch(_removeItem(cart));
+    dispatch(_removeItem(remove));
   };
 };
 
-export const addToGuestCart = (cart) => {
-  return async function (dispatch) {
-    dispatch(_guestCart(cart));
-  };
-};
+export const deleteFromLocalStorage = (product) => {
+  localStorage.removeItem(`${product.id}`)
+}
 
 // export const removeItem = (productId) => {
 //   return async();

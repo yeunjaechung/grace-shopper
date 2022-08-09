@@ -18,13 +18,21 @@ const setAuth = (auth) => ({ type: SET_AUTH, auth });
  */
 export const me = () => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
-  console.log('local storage', window.localStorage)
+  // const localStorage = window.localStorage;
+  // // console.log(localStorage)
+  // for (let key in localStorage) {
+  //   if (+key) {
+  //     let parsed = JSON.parse(localStorage[key]);
+  //     console.log(parsed)
+  //   }
+  // }
   if (token) {
     const res = await axios.get("/auth/me", {
       headers: {
         authorization: token,
       },
     });
+    
     return dispatch(setAuth(res.data));
   }
 };

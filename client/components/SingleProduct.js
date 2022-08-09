@@ -18,12 +18,13 @@ export class SingleProduct extends React.Component {
     const productId = this.props.match.params.productId;
     this.props.fetchProduct(productId);
   }
-  addedToCart(){
+  addedToCart() {
     const productItem = {
-      fakeOrderProduct: {
+      Order_Product: {
         productId: this.props.product.id,
         quantity: 1,
         unitPrice: this.props.product.price,
+        totalPrice: this.props.product.price
       },
       id: this.props.product.id,
       name: this.props.product.name,
@@ -33,17 +34,20 @@ export class SingleProduct extends React.Component {
       flavorText: this.props.product.flavorText,
       nationalPokedexNumber: this.props.product.nationalPokedexNumber,
     };
-    console.log("productItem", productItem);
+
     if (localStorage.getItem(`${this.props.product.id}`)) {
-      let gotItem = localStorage.getItem(`${this.props.product.id}`)
+      let gotItem = localStorage.getItem(`${this.props.product.id}`);
       const parsedItem = JSON.parse(gotItem);
-      const newQuantity = parsedItem.fakeOrderProduct.quantity + 1;
-      console.log("newQuantity", newQuantity);
+      const newQuantity = parsedItem.Order_Product.quantity + 1;
+      const price = parsedItem.Order_Product.unitPrice;
+      const total = newQuantity * price
+
       const addingItem = {
-        fakeOrderProduct: {
+        Order_Product: {
           productId: this.props.product.id,
           quantity: newQuantity,
           unitPrice: this.props.product.price,
+          totalPrice: total
         },
         id: this.props.product.id,
         name: this.props.product.name,
@@ -54,12 +58,11 @@ export class SingleProduct extends React.Component {
         nationalPokedexNumber: this.props.product.nationalPokedexNumber,
       };
       let updatedStringItem = JSON.stringify(addingItem);
-      localStorage.setItem(`${this.props.product.id}`, updatedStringItem)
+      localStorage.setItem(`${this.props.product.id}`, updatedStringItem);
     } else {
       let stringItem = JSON.stringify(productItem);
-      localStorage.setItem(`${this.props.product.id}`, stringItem)
+      localStorage.setItem(`${this.props.product.id}`, stringItem);
     }
-    
   }
 
   guestCartLoader() {
@@ -68,8 +71,7 @@ export class SingleProduct extends React.Component {
     this.props.addToGuestCart(parsedItem);
   }
 
-  componentDidUpdate() {
-  }
+  componentDidUpdate() {}
 
   isAdmin(userType) {
     return userType === "admin" ? true : false;
@@ -81,9 +83,8 @@ export class SingleProduct extends React.Component {
   }
   render() {
     const product = this.props.product;
-    if(!product){
-      return <div>Pokemon Deleted! Go back to all products...
-      </div>
+    if (!product) {
+      return <div>Pokemon Deleted! Go back to all products...</div>;
     }
     if (this.props.user.userType === "admin") {
       return (
@@ -113,22 +114,19 @@ export class SingleProduct extends React.Component {
           <img src={product.imageSmall}></img>
           <h1>Product Name: {product.name}</h1>
           <h2>{product.price}</h2>
-          <button
-            type="button"
-            onClick={() => this.addedToCart()}
-          >
+          <button type="button" onClick={() => this.addedToCart()}>
             Add to Cart
           </button>
         </div>
       );
     }
-   ;}}
-
+  }
+}
 
 const mapState = (state) => {
   return {
     product: state.product,
-    user: state.auth
+    user: state.auth,
   };
 };
 
@@ -136,7 +134,7 @@ const mapDispatch = (dispatch) => {
   return {
     fetchProduct: (productId) => dispatch(fetchProduct(productId)),
     addItem: (product) => dispatch(addItem(product)),
-    deleteProduct: (product) => dispatch(deleteProduct(product))
+    deleteProduct: (product) => dispatch(deleteProduct(product)),
   };
 };
 

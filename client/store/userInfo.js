@@ -54,7 +54,6 @@ export const updateUser = (obj) => async dispatch => {
 const initialState = {}
 
 const userReducer = (state = initialState, action) => {
-  console.log('action.auth', state)
   switch (action.type) {
     case SET_USER:
       return action.auth
