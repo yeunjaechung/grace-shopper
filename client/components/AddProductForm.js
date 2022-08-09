@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from 'react-redux';
+import { createNewProduct } from "../store/allProducts";
 
 class AddProduct extends React.Component {
 constructor(){
@@ -15,7 +16,7 @@ constructor(){
     this.submitHandler = this.submitHandler.bind(this);
 }
 submitHandler(){
-
+    this.props.createNewProduct(this.state)
 }
 
 handleChange(event){
@@ -48,6 +49,8 @@ render(){
 
 const mapDispatch = (dispatch) => {
 return {
-    createProduct: (product) => dispatch(createProduct())
+    createProduct: (product) => dispatch(createNewProduct(product))
 }
 }
+
+export default connect(null, mapDispatch)(AddProduct);

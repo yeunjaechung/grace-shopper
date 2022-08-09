@@ -33,6 +33,16 @@ router.delete('/:id', async (req, res, next) => {
   }catch(err){
     next(err);
   }
+});
+
+router.post('/new-product', async (req, res, next) => {
+  try{
+    const{name, price, flavorText, imageSmall, imageLarge, nationalPokedexNumbers} = req.body;
+    const newProduct = await Product.create({name, price, flavorText, imageSmall, imageLarge, nationalPokedexNumbers});
+    res.send(newProduct);
+  }catch(err){
+    next(err);
+  }
 })
 
 module.exports = router;
