@@ -47,7 +47,18 @@ router.post('/new-product', async (req, res, next) => {
   }catch(err){
     next(err);
   }
-})
+});
+
+router.put('/update/:id', async (req, res, next) => {
+  try {
+    const {name, price, description} = req.body;
+   const product = await Product.findByPk(req.params.id);
+   await product.update({name: name, price: price, flavorText: description});
+   res.send(product);
+  } catch (err){
+   next(err)
+  }
+});
 
 
 module.exports = router;

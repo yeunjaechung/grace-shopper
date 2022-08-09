@@ -2,20 +2,24 @@ import axios from "axios";
 
 // ACTIONS
 const FETCH_ALL_PRODUCTS = "FETCH_ALL_PRODUCTS";
-const CREATE_PRODUCT = 'CREATE PRODUCT';
+const CREATE_PRODUCT = 'CREATE_PRODUCT';
 
 // ACTION CREATORS
 const setProducts = (products) => {
   return { type: FETCH_ALL_PRODUCTS, products };
 };
 
-// THUNKS
 export const createProduct = (product) => {
   return {
     type: CREATE_PRODUCT,
     product
   }
-}
+};
+
+
+
+// THUNKS
+
 
 export const fetchProducts = () => {
   return async function (dispatch) {
@@ -30,7 +34,9 @@ export const createNewProduct = (product) => {
     const {data: newProduct} = await axios.post(`/api/products/new-product`, product);
     dispatch(createProduct(newProduct));
   }
-}
+};
+
+export 
 
 const initialState = [];
 

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchProduct, deleteProduct } from "../store/singleProduct";
 import { addItem } from "../store/order";
+import UpdateProduct from "./UpdateProductForm";
 
 export class SingleProduct extends React.Component {
   constructor() {
@@ -17,6 +18,7 @@ export class SingleProduct extends React.Component {
   componentDidMount() {
     const productId = this.props.match.params.productId;
     this.props.fetchProduct(productId);
+    this.setState(this.props.product)
   }
   addedToCart() {
     const productItem = {
@@ -82,13 +84,15 @@ export class SingleProduct extends React.Component {
     window.location.reload();
   }
   render() {
-    const product = this.props.product;
-    if (!product) {
-      return <div>Pokemon Deleted! Go back to all products...</div>;
+    const product = this.props.product || {};
+    if(!product){
+      return <div>Pokemon Deleted! Go back to all products...
+      </div>
     }
     if (this.props.user.userType === "admin") {
       return (
         <div>
+          < UpdateProduct product={product} />
           <img src={product.imageSmall}></img>
           <h1>Product Name: {product.name}</h1>
           <h2>{product.price / 100}</h2>
