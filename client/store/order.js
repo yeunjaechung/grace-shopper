@@ -6,7 +6,7 @@ const TOKEN = "token";
 const GET_CART = "GET_CART";
 const ADD_ITEM = "ADD_ITEM";
 const REMOVE_ITEM = "REMOVE_ITEM";
-const UPDATE_ORDER_PRODCUTS = "UPDATE_ORDER_PRODCUTS";
+const UPDATE_ORDER_PRODUCTS = "UPDATE_ORDER_PRODCUTS";
 const GUEST_CART = "GUEST_CART";
 
 // Action Creators
@@ -16,7 +16,7 @@ const _getCart = (cart) => ({
 });
 
 const _updateOrderProducts = (cart) => ({
-  type: UPDATE_ORDER_PRODCUTS,
+  type: UPDATE_ORDER_PRODUCTS,
   cart,
 });
 
@@ -25,19 +25,16 @@ const _addItem = (cart) => ({
   cart,
 });
 
-
 const _removeItem = (cart) => ({
   type: REMOVE_ITEM,
   cart,
 });
-
 
 // Action Creators
 const _guestCart = (cart) => ({
   type: GUEST_CART,
   cart,
 });
-
 
 // Thunks
 export const fetchCart = () => {
@@ -51,7 +48,6 @@ export const fetchCart = () => {
     dispatch(_getCart(cart));
   };
 };
-
 
 export const updateOrderProduct = (product, updateInfo) => {
   const token = window.localStorage.getItem(TOKEN);
@@ -81,7 +77,6 @@ export const addItem = (product) => {
   };
 };
 
-
 export const removeItem = (product) => {
   const token = window.localStorage.getItem(TOKEN);
   return async (dispatch) => {
@@ -98,7 +93,6 @@ export const removeItem = (product) => {
   };
 };
 
-// Thunks
 export const addToGuestCart = (cart) => {
   return async function (dispatch) {
     dispatch(_guestCart(cart));
@@ -119,7 +113,7 @@ export default function orderReducer(state = {}, action) {
       return action.cart;
     case REMOVE_ITEM:
       return action.cart;
-    case UPDATE_ORDER_PRODCUTS:
+    case UPDATE_ORDER_PRODUCTS:
       return action.cart;
     default:
       return state;

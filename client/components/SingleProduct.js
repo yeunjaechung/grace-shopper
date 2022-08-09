@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchProduct, deleteProduct } from "../store/singleProduct";
 import { addItem } from "../store/order";
 import { addToGuestCart } from "../store/order";
-
 
 export class SingleProduct extends React.Component {
   constructor(){
@@ -29,6 +29,7 @@ export class SingleProduct extends React.Component {
     // let userType = this.state.auth.userType || '';
     console.log('THIS props in render', this.props);
     const product = this.props.product;
+    const isLoggedIn = this.props.isLoggedIn;
 
     if(!product){
       return <div>Pokemon Deleted! Go back to all products...
@@ -59,24 +60,29 @@ export class SingleProduct extends React.Component {
 /* needs to be resolved when final singleProduct Component!!!!!!!!!!!!!!!!!!!!!!
 this was the main:
     const isLoggedIn = this.props.isLoggedIn
-
     return (
       <div>
-      {isLoggedIn ?
-      <div>
-        {" "}
-        Product Name: {product.name}
-        <button onClick={() => this.props.addItem(product)}>Add to Cart</button>
-      </div> 
-      : 
-      <div>
-      {" "}
-      Product Name: {product.name}
-      <button onClick={() => this.props.addToGuestCart(product)}>Add to Cart</button>
-    </div> 
-    }
-    </div>
-    )
+        {isLoggedIn ? (
+          <div>
+            {" "}
+            Product Name: {product.name}
+            <Link to={"/cart"}>
+              <button onClick={() => this.props.addItem(product)}>
+                Add to Cart
+              </button>
+            </Link>
+          </div>
+        ) : (
+          <div>
+            {" "}
+            Product Name: {product.name}
+            <button onClick={() => this.props.addToGuestCart(product)}>
+              Add to Cart
+            </button>
+          </div>
+        )}
+      </div>
+    );
   }
 }
 */
@@ -93,8 +99,9 @@ const mapDispatch = (dispatch) => {
   return {
     fetchProduct: (productId) => dispatch(fetchProduct(productId)),
     addItem: (product) => dispatch(addItem(product)),
+    addToGuestCart: (product) => dispatch(addToGuestCart(product)),
     deleteProduct: (product) => dispatch(deleteProduct(product))
-    addToGuestCart: (guestCart) => dispatch(addToGuestCart(guestCart))
+
   };
 };
 

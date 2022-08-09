@@ -10,7 +10,7 @@ class CartItem extends React.Component {
     this.inputRef = React.createRef();
     this.state = {
       quantity: 1,
-      unitPrice: this.props.product.price / 100,
+      unitPrice: this.props.product.price,
       totalPrice: 1,
     };
     this.handleQuantity = this.handleQuantity.bind(this);
@@ -19,28 +19,32 @@ class CartItem extends React.Component {
 
   handleQuantity(evt) {
     let quantity = Number([evt.target.value]);
-    const totalPrice = (quantity * this.props.product.price) / 100;
-    let updateInfo = { quantity, unitPrice: this.state.unitPrice, totalPrice };
-    // this.props.updateOrder(this.props.product, updateInfo);
-    console.log(updateInfo);
+    const totalPrice = quantity * this.props.product.price;
+    let updateInfo = {
+      quantity,
+      unitPrice: this.state.unitPrice,
+      totalPrice: totalPrice,
+    };
+    this.props.updateOrder(this.props.product, updateInfo);
     this.setState({ quantity, totalPrice });
   }
 
   handleClick() {
     let quantity = Number(this.inputRef.current.value);
-    const totalPrice = (quantity * this.props.product.price) / 100;
-    let updateInfo = { quantity, unitPrice: this.state.unitPrice, totalPrice };
-    // this.props.updateOrder(this.props.product, updateInfo);
-    console.log(updateInfo);
+    const totalPrice = quantity * this.props.product.price;
+    let updateInfo = {
+      quantity,
+      unitPrice: this.state.unitPrice,
+      totalPrice: totalPrice,
+    };
+    this.props.updateOrder(this.props.product, updateInfo);
     this.setState({ quantity, totalPrice });
   }
 
   componentDidMount() {
     const quantity = this.props.product.Order_Product.quantity;
-    const totalPrice = (quantity * this.props.product.price) / 100;
+    const totalPrice = quantity * this.props.product.price;
     this.setState({ quantity, totalPrice });
-    // let updateInfo = { quantity, unitPrice: this.state.unitPrice, totalPrice };
-    // this.props.updateOrder(this.props.product, updateInfo);
   }
 
   render() {
@@ -88,8 +92,8 @@ class CartItem extends React.Component {
         {renderCheck}
         <br />
         <br />
-        <span>Unit Price: ${unitPrice}</span>
-        <h3>Subtotal: ${totalPrice}</h3>
+        <span>Unit Price: ${unitPrice / 100}</span>
+        <h3>Subtotal: ${totalPrice / 100}</h3>
       </div>
     );
   }

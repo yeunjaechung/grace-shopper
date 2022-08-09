@@ -2,10 +2,9 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-
 const Order = require("./Order");
 const Product = require("./Product");
-const Order_Products = require("../index");
+const Order_Products = require("./Order_Products");
 
 const SALT_ROUNDS = 5;
 
@@ -152,19 +151,37 @@ User.prototype.addToCart = async function (productId) {
         totalPrice: updatedTotalPrice,
       },
     });
+    // await Order_Products.update(
+    //   {
+    //     quantity: updatedQty,
+    //   },
+    //   {
+    //     where: {
+    //       orderId: cart.id,
+    //       productId,
+    //     },
+    //   }
+    // );
   }
   return this.getCart();
 };
 
 User.prototype.updateOrderProduct = async function (product, updateInfo) {
   const cart = await this.getCart();
-  cart.addProduct(product, {
-    through: {
-      quantity: updateInfo.quantity,
-      unitePrice: updateInfo.unitPrice,
-      totalPrice: updateInfo.totalPrice,
+  const { quantity, unitPrice, totalPrice } = updateInfo;
+  await Order_Products.update(
+    {
+      quantity,
+      unitPrice,
+      totalPrice,
     },
-  });
+    {
+      where: {
+        orderId: cart.id,
+        productId: product.id,
+      },
+    }
+  );
   return this.getCart();
 };
 
