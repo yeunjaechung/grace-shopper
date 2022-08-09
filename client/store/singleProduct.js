@@ -4,17 +4,11 @@ const TOKEN = "token";
 
 // ACTIONS
 const FETCH_SINGLE_PRODUCT = "FETCH_SINGLE_PRODUCT";
-const ADD_ITEM = "ADD_ITEM";
 const DELETE_ITEM = 'DELETE_ITEM';
 
 // ACTION CREATORS
 const setProduct = (product) => ({
   type: FETCH_SINGLE_PRODUCT,
-  product,
-});
-
-const _addItem = (product) => ({
-  type: ADD_ITEM,
   product,
 });
 
@@ -39,23 +33,6 @@ export const deleteProduct = (product) => {
     dispatch(deleteItem(deletedProduct));
   }
 }
-
-export const addItem = (product) => {
-  const token = window.localStorage.getItem(TOKEN);
-  return async function (dispatch) {
-    const response = await axios.post(
-      `/api/users/addToCart`,
-      product,
-      {
-        headers: {
-          authorization: token,
-        },
-      }
-    );
-  
-    // dispatch(_addItem(newItem));
-  };
-};
 
 const initialState = {};
 

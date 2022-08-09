@@ -71,9 +71,20 @@ router.post("/newUser", async (req, res, next) => {
       shippingAddress,
       billingAddress,
     });
-
     await newUser.getCart();
     res.status(201).send(newUser);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//editing a User
+router.put("/userInfo", async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+    console.log('req.body', req.body);
+    await user.update(req.body);
+    res.status(200).send(user);
   } catch (err) {
     next(err);
   }
@@ -104,8 +115,7 @@ router.post("/addToCart", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
     const productId = req.body.id;
-    await user.addToCart(productId);
- res.send('hi')
+    res.send(await user.addToCart(productId));
   } catch (err) {
     next(err);
   }
@@ -118,6 +128,19 @@ router.put("/removeToCart", async (req, res, next) => {
     const user = await User.findByToken(req.headers.authorization);
     const cart = await user.removeFromCart(req.body);
     res.send(cart);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//update Order_Product
+
+router.post("/updateOrderProduct", async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+    const { product, updateInfo } = req.body;
+    const newCart = await user.updateOrderProduct(product, updateInfo);
+    res.send(newCart);
   } catch (err) {
     next(err);
   }

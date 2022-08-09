@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchProduct, addItem, deleteProduct } from "../store/singleProduct";
+import { fetchProduct, deleteProduct } from "../store/singleProduct";
+import { addItem } from "../store/order";
 
 export class SingleProduct extends React.Component {
   constructor(){
@@ -57,6 +58,7 @@ const mapState = (state) => {
   return {
     product: state.product,
     user: state.auth
+
   };
 };
 
