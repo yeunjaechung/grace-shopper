@@ -31,10 +31,6 @@ const _removeItem = (cart) => ({
 });
 
 // Action Creators
-const _guestCart = (cart) => ({
-  type: GUEST_CART,
-  cart,
-});
 
 // Thunks
 export const fetchCart = () => {

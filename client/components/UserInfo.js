@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { updateUser, setUser } from "../store/userInfo";
+import { me } from "../store/auth";
 
 class UserInfo extends React.Component {
   constructor(props) {
@@ -8,6 +9,9 @@ class UserInfo extends React.Component {
     this.state = {
       firstName: '',
       lastName: '',
+      email: '',
+      phoneNumber: '',
+      password: '',
       shippingAddress: '',
       billingAddress: '',
     }
@@ -15,33 +19,35 @@ class UserInfo extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  componentDidUpdate(prevProps){
-    if (prevProps.auth.id !== this.props.auth.id){
-      this.setState({
-        firstName: this.props.auth.firstName || '',
-        lastName: this.props.auth.lastName || '',
-        email: this.props.auth.email || '',
-        shippingAddress: this.props.auth.shippingAddress || '',
-        billingAddress: this.props.auth.billingAddress || ''
-      })
-    }
-  }
-
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value
     });
   }
-  
+
   handleSubmit(evt) {
     evt.preventDefault();
     this.props.updateUser({ ...this.props.auth, ...this.state });
+  }
+
+  componentDidMount() {
+    this.props.me();
+    this.setState({
+      firstName: this.props.auth.firstName || '',
+      lastName: this.props.auth.lastName || '',
+      email: this.props.auth.email || '',
+      phoneNumber: this.props.auth.phoneNumber || '',
+      shippingAddress: this.props.auth.shippingAddress || '',
+      billingAddress: this.props.auth.billingAddress || ''
+    })
   }
 
   render() {
     //returns a form with the user's info that can be edited
     //let address = `${this.state.address1} ${this.state.address2} ${this.state.city} ${this.state.state} ${this.state.zip}`;
     const { handleSubmit, handleChange } = this;
+    console.log('state', this.state)
+
     return (
       <div className="update-form" >
         <h4>Update User Details:</h4>
@@ -96,7 +102,6 @@ class UserInfo extends React.Component {
           <label htmlFor="email">Email: </label>
           <input
             className="input-effect"
-            type="email"
             name="email"
             onChange={handleChange}
             value={this.state.email} />
@@ -129,7 +134,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (obj) => dispatch(updateUser(obj)),
-    clearUser: () => dispatch(setUser())
+    clearUser: () => dispatch(setUser()),
+    me: () => dispatch(me())
   };
 };
 
