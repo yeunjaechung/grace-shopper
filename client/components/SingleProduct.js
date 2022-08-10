@@ -37,7 +37,6 @@ export class SingleProduct extends React.Component {
       flavorText: this.props.product.flavorText,
       nationalPokedexNumber: this.props.product.nationalPokedexNumber,
     };
-
     if (localStorage.getItem(`${this.props.product.id}`)) {
       let gotItem = localStorage.getItem(`${this.props.product.id}`);
       const parsedItem = JSON.parse(gotItem);

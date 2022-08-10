@@ -194,7 +194,6 @@ async function seed() {
     product6,
   ]);
 
-
   console.log(`seeded successfully`);
 }
 

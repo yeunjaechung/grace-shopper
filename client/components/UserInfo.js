@@ -46,8 +46,6 @@ class UserInfo extends React.Component {
     //returns a form with the user's info that can be edited
     //let address = `${this.state.address1} ${this.state.address2} ${this.state.city} ${this.state.state} ${this.state.zip}`;
     const { handleSubmit, handleChange } = this;
-    console.log('state', this.state)
-
     return (
       <div className="update-form" >
         <h4>Update User Details:</h4>
@@ -56,7 +54,6 @@ class UserInfo extends React.Component {
           <input
             className="input-effect"
             name="firstName"
-          
             onChange={handleChange}
             value={this.state.firstName} />
             <span className="focus-border" />

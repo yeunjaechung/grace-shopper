@@ -4,10 +4,8 @@ const TOKEN = "token";
 
 // ACTIONS
 const FETCH_SINGLE_PRODUCT = "FETCH_SINGLE_PRODUCT";
-
 const DELETE_ITEM = 'DELETE_ITEM';
 const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
-
 
 // ACTION CREATORS
 const setProduct = (product) => ({
@@ -66,6 +64,7 @@ export const updateProductThunk = (product) => {
     }
   }
 }
+
 const initialState = {};
 
 export default function singleProductReducer(state = initialState, action) {
@@ -74,8 +73,8 @@ export default function singleProductReducer(state = initialState, action) {
       return action.product;
     case DELETE_ITEM:
       return null;
-      case UPDATE_PRODUCT:
-        return action.product;
+    case UPDATE_PRODUCT:
+      return action.product;
     default:
       return state;
   }

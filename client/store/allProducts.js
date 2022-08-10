@@ -19,8 +19,6 @@ export const createProduct = (product) => {
 
 
 // THUNKS
-
-
 export const fetchProducts = () => {
   return async function (dispatch) {
     const response = await axios.get("/api/products");
@@ -30,13 +28,15 @@ export const fetchProducts = () => {
 };
 
 export const createNewProduct = (product) => {
-  return async function(dispatch) {
-    const {data: newProduct} = await axios.post(`/api/products/new-product`, product);
+  return async function (dispatch) {
+    const { data: newProduct } = await axios.post(
+      `/api/products/new-product`,
+      product
+    );
     dispatch(createProduct(newProduct));
-  }
+  };
 };
 
-export 
 
 const initialState = [];
 
@@ -46,8 +46,8 @@ export default function productsReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_ALL_PRODUCTS:
       return action.products;
-      case CREATE_PRODUCT:
-        return [...state, action.product];
+    case CREATE_PRODUCT:
+      return [...state, action.product];
     default:
       return state;
   }

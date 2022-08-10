@@ -24,9 +24,12 @@ export function Checkout({ cart, auth }) {
       <div>
         <h3>Shipping Information</h3>
         <h5>
-          Name:{auth.firstName} {auth.lastName}
+          Name: {auth.firstName} {auth.lastName}
         </h5>
-        <h5>Address: {auth.address}</h5>
+        <h5>Address: {auth.shippingAddress}</h5>
+        <Link to={"/checkout/edit"}>
+          <button>Edit</button>
+        </Link>
       </div>
       <div>
         <h3>Order Preview</h3>
