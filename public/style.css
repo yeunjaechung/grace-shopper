@@ -118,6 +118,11 @@ max-height: 342;
 margin: 5px;
 }
 
+.margined {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .homepage {
 background-image: url('https://wallpaperaccess.com/full/109332.jpg');
 background-repeat: no-repeat;

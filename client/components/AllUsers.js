@@ -16,33 +16,33 @@ export class AllUsers extends React.Component {
     if (this.props.user.userType === "admin") {
       return (
         <section className="bg-green" id='carousel'>
-          <h1>All Users Component</h1>
+          <h1 className="anchor-container">All Users Component</h1>
 
           <hr />
-          <div>
+          <div className="cartBox bg-white">
             {this.props.users.map((user) => (
               <div key={user.id}>
                 <h3>Name: {user.firstName} {user.lastName}</h3>
                 <ul>
-                  <li>user email: {user.email}</li>
-                  <li> user id: {user.id}</li>
-                  <li> user created at: {user.createdAt}</li>
-                  <li>user billing address: </li>
-                  <li>
+                  <li className="center margined">user email: {user.email}</li>
+                  <li className="center margined"> user id: {user.id}</li>
+                  <li className="center margined"> user created at: {user.createdAt}</li>
+                  <li className="center margined">user billing address: </li>
+                  <li className="center margined">
                     {" "}
                     {user.billingAddress
                       ? user.billingAddress
                       : "no billing address"}
                     user shipping address:{" "}
                   </li>
-                  <li>
+                  <li className="center margined">
                     {" "}
                     {user.shippingAddress
                       ? user.shippingAddress
                       : "no shipping address"}
                   </li>
 
-                  <li>
+                  <li className="center margined">
                     {" "}
                     user phone number:{" "}
                     {user.phoneNumber ? user.phoneNumber : "no phone number"}
