@@ -151,26 +151,6 @@ class Cart extends React.Component {
       } = obj;
       return accum + totalPrice;
     }, 0);
-    
-    const renderCheck =
-                  product.Order_Product.quantity < 10 ? (
-                    <select
-                      value={product.Order_Product.quantity}
-                      onChange={(evt) => {
-                        this.handleQuantity(evt, product);
-                      }}
-                    >
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10+</option>
-                    </select>
 
     return (
       <section className="bg-whiteblue" id="carousel">
@@ -191,11 +171,26 @@ class Cart extends React.Component {
             <ul className="allProducts">
               {loggedOutCart.map((product) => {
                 this.state.total += product.Order_Product.totalPrice;
-                return (
-                  <div className="cartBox" key={product.id}>
-                    <Link to={`/products/${product.id}`}>
-                      <img src={product.imageSmall} />
-                    </Link>
+                const renderCheck =
+                  product.Order_Product.quantity < 10 ? (
+                    <select
+                      value={product.Order_Product.quantity}
+                      onChange={(evt) => {
+                        this.handleQuantity(evt, product);
+                      }}
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10+</option>
+                    </select>
+                  ) : (
                     <div>
                       <input
                         ref={this.inputRef}
@@ -212,7 +207,7 @@ class Cart extends React.Component {
                     </div>
                   );
                 return (
-                  <div key={product.id}>
+                  <div className="cartBox" key={product.id}>
                     <Link to={`/products/${product.id}`}>
                       <img src={product.imageSmall} />
                     </Link>
