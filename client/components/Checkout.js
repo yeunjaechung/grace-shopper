@@ -26,7 +26,8 @@ class Checkout extends React.Component {
       return accum + totalPrice;
     }, 0);
     return (
-      <div>
+      <section className="bg-whiteblue container" id='carousel'>
+        <div className="cartBox">
         <h1>Checkout</h1>
         <div>
           <h3>Shipping Information</h3>
@@ -38,19 +39,21 @@ class Checkout extends React.Component {
             <button>Edit</button>
           </Link>
         </div>
+        </div>
         <div>
           <h3>Order Preview</h3>
           <ul>
             {products.map((product, index) => {
               return <CartItem product={product} key={index} />;
             })}
-            <h1>Total: ${total / 100}</h1>
+            
           </ul>
-        </div>
-        <Link to={`/payment`}>
+          <h1>Total: ${total / 100}</h1>
+          <Link to={`/payment`}>
           <button>Onto Payment</button>
         </Link>
-      </div>
+        </div>
+      </section>
     );
   }
 }

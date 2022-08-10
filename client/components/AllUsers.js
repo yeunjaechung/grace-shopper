@@ -15,7 +15,7 @@ export class AllUsers extends React.Component {
   render() {
     if (this.props.user.userType === "admin") {
       return (
-        <div>
+        <section className="bg-green" id='carousel'>
           <h1>All Users Component</h1>
 
           <hr />
@@ -51,10 +51,10 @@ export class AllUsers extends React.Component {
               </div>
             ))}
           </div>
-        </div>
+        </section>
       );
     } else {
-      return <div>You should not be here</div>;
+      return <section className="bg-green" id='carousel'>You should not be here</section>;
     }
   }
 }

@@ -123,36 +123,44 @@ class EditCheckout extends React.Component {
     const { handleChange, handleSubmit } = this;
 
     return (
-      <form onSubmit={handleSubmit}>
-        <h2>
-          Name: {firstName} {lastName}
-        </h2>
+      <section className="bg-whiteblue container" id="carousel">
+        <div className="cartBox">
+          <form onSubmit={handleSubmit}>
+            <h2>
+              Name: {firstName} {lastName}
+            </h2>
 
-        <label htmlFor="phoneNumber">Phone Number: </label>
-        <input name="phoneNumber" onChange={handleChange} value={phoneNumber} />
+            <label htmlFor="phoneNumber">phoneNumber: </label>
+            <input
+              name="phoneNumber"
+              onChange={handleChange}
+              value={phoneNumber}
+            />
 
-        <label htmlFor="shippingAddress">Shipping Address: </label>
-        <input
-          name="shippingAddress"
-          onChange={handleChange}
-          value={shippingAddress}
-        />
+            <label htmlFor="shippingAddress">shippingAddress: </label>
+            <input
+              name="shippingAddress"
+              onChange={handleChange}
+              value={shippingAddress}
+            />
 
-        <label htmlFor="billingAddress">Billing Address: </label>
-        <input
-          name="billingAddress"
-          onChange={handleChange}
-          value={billingAddress}
-        />
-        <br />
-        <br />
+            <label htmlFor="billingAddress">billingAddress: </label>
+            <input
+              name="billingAddress"
+              onChange={handleChange}
+              value={billingAddress}
+            />
+            <br />
+            <br />
 
-        <button type="submit">Save Change</button>
-        {/* <Link to="/">Cancel</Link> */}
-        <button type="button" onClick={() => this.props.history.goBack()}>
-          Cancel
-        </button>
-      </form>
+            <button type="submit">Save Change</button>
+            {/* <Link to="/">Cancel</Link> */}
+            <button type="button" onClick={() => this.props.history.goBack()}>
+              Cancel
+            </button>
+          </form>
+        </div>
+      </section>
     );
   }
 }

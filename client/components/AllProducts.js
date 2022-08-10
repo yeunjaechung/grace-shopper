@@ -13,51 +13,56 @@ export class AllProducts extends React.Component {
   }
   render() {
     const products = this.props.products;
-    if(this.props.user.userType === 'admin'){
+    if (this.props.user.userType === "admin") {
       return (
-        <div>
-          <h1>All Products Component</h1>
+        <section className="bg-green container" id="carousel">
+          <h1 className="anchor-container">Welcome Administrator! Try not to delete anything important</h1>
           <AddProductForm />
           <hr />
           <div className="allProducts">
             {products.map((product) => (
-              <div className="productChild" key={product.id}>
-                <h1> {product.name} </h1>{" "}
-                <img src={product.imageSmall} />
+              <div className="prodBox" key={product.id}>
                 <Link to={`/products/${product.id}`} key={product.id}>
-                  <p>Link to Product page</p>
+                  <h1 className="center"> {product.name} </h1>{" "}
+                  <img src={product.imageSmall} />
+                  <p className="center">National Pokedex</p>
+                  <p className="center">
+                    Number: {product.nationalPokedexNumbers}
+                  </p>
                 </Link>
               </div>
             ))}
           </div>
-        </div>
+        </section>
       );
-    }else{
+    } else {
       return (
-        <div>
-          <h1>All Products Component</h1>
+        <section className="bg-whiteblue container" id="carousel">
+          <h1>Gotta Collect 'em All!</h1>
           <div className="allProducts">
             {products.map((product) => (
-              <div key={product.id}>
-                <h1> {product.name} </h1>{" "}
-                <img src={product.imageSmall} />
+              <div className="prodBox" key={product.id}>
                 <Link to={`/products/${product.id}`} key={product.id}>
-                  <p>Link to Product page</p>
+                  <h1 className="center"> {product.name} </h1>
+                  <img src={product.imageSmall} />
+                  <p className="center">National Pokedex</p>
+                  <p className="center">
+                    Number: {product.nationalPokedexNumbers}
+                  </p>
                 </Link>
               </div>
             ))}
           </div>
-        </div>
+        </section>
       );
     }
-    
   }
 }
 
 const mapState = (state) => {
   return {
     products: state.products,
-    user: state.auth
+    user: state.auth,
   };
 };
 

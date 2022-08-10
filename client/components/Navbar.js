@@ -11,43 +11,56 @@ const Navbar = ({ handleClick, isLoggedIn, cart, products }) => {
     } = obj;
     return accum + quantity;
   }, 0);
-
   let productsLength = products.length;
 
   return (
-    <div>
-      <h1>Welcome to the Pokemon TCG Store!</h1>
+    <header className="bg-blue">
       <nav>
+      <h1 className="anchor-container">GS: Pokemon TCG Shop</h1>
         {isLoggedIn ? (
           <div>
             {/* The navbar will show these links after you log in */}
             <div className="linkHolder">
-              <Link to="/home">Home</Link>
-              <Link to="/products">Products({productsLength})</Link>
-              <Link to="/cart">Cart({cartItems})</Link>
-              <Link to="/editInfo">Edit Your Info</Link>
-              {/* Will update after user pages are created 
-            <Link to={`/${user.email}/orders`}>Order History</Link>
-            */}
-              <a href="#" onClick={handleClick}>
-                Logout
-              </a>
+              <div className="anchor-container">
+                <Link to="/home">Home</Link>
+              </div>
+              <div className="anchor-container">
+                <Link to="/products">Products({productsLength})</Link>
+              </div>
+              <div className="anchor-container">
+                <Link to="/cart">Cart({cartItems})</Link>
+              </div>
+              <div className="anchor-container">
+                <Link to="/editInfo">Edit Your Info</Link>
+              </div>
+              <div className="anchor-container">
+                <a href="#" onClick={handleClick}>
+                  Logout
+                </a>
+              </div>
             </div>
           </div>
         ) : (
           <div>
             {/* The navbar will show these links before you log in */}
             <div className="linkHolder">
-              <Link to="/home">Home</Link>
-              <Link to="/products">Products({productsLength})</Link>
-              <Link to="/cart">Cart</Link>
-              <Link to="/login">Login</Link>
+              <div className="anchor-container">
+                <Link to="/home">Home</Link>
+              </div>
+              <div className="anchor-container">
+                <Link to="/products">Products({productsLength})</Link>
+              </div>
+              <div className="anchor-container">
+                <Link to="/cart">Cart</Link>
+              </div>
+              <div className="anchor-container">
+                <Link to="/login">Login / Sign Up</Link>
+              </div>
             </div>
           </div>
         )}
       </nav>
-      <hr />
-    </div>
+    </header>
   );
 };
 

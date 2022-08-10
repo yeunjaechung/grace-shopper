@@ -151,25 +151,8 @@ class Cart extends React.Component {
       } = obj;
       return accum + totalPrice;
     }, 0);
-
-    return (
-      <div>
-        {this.props.isLoggedIn ? (
-          <div>
-            <ul>
-              {products.map((product, index) => {
-                return <CartItem product={product} key={index} />;
-              })}
-              <h1>Total: ${total / 100}</h1>
-            </ul>
-            {buttonCheckForUser}
-          </div>
-        ) : (
-          <div>
-            <ul>
-              {loggedOutCart.map((product) => {
-                this.state.total += product.Order_Product.totalPrice;
-                const renderCheck =
+    
+    const renderCheck =
                   product.Order_Product.quantity < 10 ? (
                     <select
                       value={product.Order_Product.quantity}
@@ -188,7 +171,31 @@ class Cart extends React.Component {
                       <option value="9">9</option>
                       <option value="10">10+</option>
                     </select>
-                  ) : (
+
+    return (
+      <section className="bg-whiteblue" id="carousel">
+        {this.props.isLoggedIn ? (
+          <div>
+            <ul className="allProducts">
+              {products.map((product, index) => {
+                return <CartItem product={product} key={index} />;
+              })}
+            </ul>
+            <div className="cartBox">
+              <h1>Total: ${total / 100}</h1>
+              {buttonCheckForUser}
+            </div>
+          </div>
+        ) : (
+          <div>
+            <ul className="allProducts">
+              {loggedOutCart.map((product) => {
+                this.state.total += product.Order_Product.totalPrice;
+                return (
+                  <div className="cartBox" key={product.id}>
+                    <Link to={`/products/${product.id}`}>
+                      <img src={product.imageSmall} />
+                    </Link>
                     <div>
                       <input
                         ref={this.inputRef}
@@ -233,12 +240,14 @@ class Cart extends React.Component {
                   </div>
                 );
               })}
-              <h1>Total: ${this.state.total / 100}</h1>
             </ul>
-            {buttonCheckForGuest}
+            <div className="cartBox">
+              <h1>Total: ${this.state.total / 100}</h1>
+              {buttonCheckForGuest}
+            </div>
           </div>
         )}
-      </div>
+      </section>
     );
   }
 }
