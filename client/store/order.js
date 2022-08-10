@@ -7,6 +7,7 @@ const GET_CART = "GET_CART";
 const ADD_ITEM = "ADD_ITEM";
 const REMOVE_ITEM = "REMOVE_ITEM";
 const UPDATE_ORDER_PRODUCTS = "UPDATE_ORDER_PRODUCTS";
+const CLOSE_ORDER = "CLOSE_ORDER";
 const GUEST_CART = "GUEST_CART";
 
 // Action Creators
@@ -27,6 +28,11 @@ const _addItem = (cart) => ({
 
 const _removeItem = (cart) => ({
   type: REMOVE_ITEM,
+  cart,
+});
+
+const _closeOrder = (cart) => ({
+  type: CLOSE_ORDER,
   cart,
 });
 
@@ -63,7 +69,7 @@ export const updateOrderProduct = (product, updateInfo) => {
 
 export const addItem = (product) => {
   const token = window.localStorage.getItem(TOKEN);
-  console.log(window.localStorage)
+  console.log(window.localStorage);
   return async function (dispatch) {
     const { data: cart } = await axios.post(`/api/users/addToCart`, product, {
       headers: {
@@ -90,9 +96,23 @@ export const removeItem = (product) => {
   };
 };
 
+export const closeOrder = (cart, history) => {
+  const token = window.localStorage.getItem(TOKEN);
+  console.log(token);
+  return async (dispatch) => {
+    const { data: newCart } = await axios.post("api/users/payment", cart, {
+      headers: {
+        authorization: token,
+      },
+    });
+    dispatch(_closeOrder(newCart));
+    history.push("/home");
+  };
+};
+
 export const deleteFromLocalStorage = (product) => {
-  localStorage.removeItem(`${product.id}`)
-}
+  localStorage.removeItem(`${product.id}`);
+};
 
 // export const removeItem = (productId) => {
 //   return async();
@@ -109,6 +129,8 @@ export default function orderReducer(state = {}, action) {
     case REMOVE_ITEM:
       return action.cart;
     case UPDATE_ORDER_PRODUCTS:
+      return action.cart;
+    case CLOSE_ORDER:
       return action.cart;
     default:
       return state;

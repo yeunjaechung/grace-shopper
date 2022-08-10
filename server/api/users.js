@@ -10,8 +10,16 @@ router.get("/", async (req, res, next) => {
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ["id", "email", 
-      "firstName", "lastName", "shippingAddress", "billingAddress", "phoneNumber", "createdAt"],
+      attributes: [
+        "id",
+        "email",
+        "firstName",
+        "lastName",
+        "shippingAddress",
+        "billingAddress",
+        "phoneNumber",
+        "createdAt",
+      ],
     });
     res.json(users);
   } catch (err) {
@@ -83,7 +91,6 @@ router.post("/newUser", async (req, res, next) => {
 router.put("/userInfo", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
-    console.log('req.body', req.body);
     await user.update(req.body);
     res.status(200).send(user);
   } catch (err) {
@@ -92,18 +99,10 @@ router.put("/userInfo", async (req, res, next) => {
 });
 
 //route to set order status from open to closed:
-
-router.put("/checkout", async (req, res, next) => {
+router.post("/payment", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
-    const ordersToClose = await Order.findOne({
-      where: {
-        userId: user.id,
-        status: "open",
-      },
-    });
-    await ordersToClose.update({ status: "closed" });
-    res.send(ordersToClose);
+    res.send(await user.closeTheOrder());
   } catch (err) {
     next(err);
   }

@@ -1,40 +1,55 @@
 import React from "react";
 import { connect } from "react-redux";
-import { closeOrder } from "../store/checkout";
+import { closeOrder, fetchCart } from "../store/order";
+import { me } from "../store";
 import { Link } from "react-router-dom";
 
 export class Payment extends React.Component {
   constructor() {
     super();
-    this.state = {
-      paid: false
-    }
     this.submitPayment = this.submitPayment.bind(this);
   }
-  componentDidMount() {
-    const userId = this.props.match.params.userId;
-    this.props.fetchOrder(userId);
-  }
+
   submitPayment() {
-    this.props.closeOrder(userId);
-    this.setState({ paid: true });
+    this.props.close(this.props.cart);
   }
+
   render() {
-    const order = this.props.order;
-   
+    const { submitPayment } = this;
+    console.log(this.props.auth);
+    const products = this.props.cart.products || [];
+    let cartItems = products.reduce(function (accum, obj) {
+      const {
+        Order_Product: { quantity },
+      } = obj;
+      return accum + quantity;
+    }, 0);
+    let total = products.reduce(function (accum, obj) {
+      const {
+        Order_Product: { totalPrice },
+      } = obj;
+      return accum + totalPrice;
+    }, 0);
+
     return (
       <div>
-        {order.status === "closed" ? (
-          <div> Thank you for shopping, here is your receipt! 
-          <receipt></receipt>
-          </div>
-            
-        ) : (
-          <div> 
-          {order}
-    <button onClick={this.submitPayment}>Submit Order</button>
-    </div>
-        )}
+        <ul>
+          {products.map((product, index) => {
+            return (
+              <div key={index}>
+                <img src={product.imageSmall} />
+                <h4>Name: {product.name}</h4>
+                <h4>Price: ${product.price / 100}</h4>
+                <h4></h4>
+              </div>
+            );
+          })}
+        </ul>
+        <div>
+          <h2>Total items: {cartItems}</h2>
+          <h2>Subtotal: ${total / 100}</h2>
+        </div>
+        <button onClick={submitPayment}>Make a payment</button>
       </div>
     );
   }
@@ -42,13 +57,16 @@ export class Payment extends React.Component {
 
 const mapState = (state) => {
   return {
-    order: state.order,
+    cart: state.cart,
+    auth: state.auth,
   };
 };
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { history }) => {
   return {
-    closeOrder: (userId) => dispatch(closeOrder(userId)),
+    close: (cart) => dispatch(closeOrder(cart, history)),
+    load: () => dispatch(fetchCart()),
+    setAuth: () => dispatch(me()),
   };
 };
 

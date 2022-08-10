@@ -128,17 +128,17 @@ class EditCheckout extends React.Component {
           Name: {firstName} {lastName}
         </h2>
 
-        <label htmlFor="phoneNumber">phoneNumber: </label>
+        <label htmlFor="phoneNumber">Phone Number: </label>
         <input name="phoneNumber" onChange={handleChange} value={phoneNumber} />
 
-        <label htmlFor="shippingAddress">shippingAddress: </label>
+        <label htmlFor="shippingAddress">Shipping Address: </label>
         <input
           name="shippingAddress"
           onChange={handleChange}
           value={shippingAddress}
         />
 
-        <label htmlFor="billingAddress">billingAddress: </label>
+        <label htmlFor="billingAddress">Billing Address: </label>
         <input
           name="billingAddress"
           onChange={handleChange}

@@ -79,7 +79,6 @@ User.findByToken = async function (token) {
   try {
     const { id } = jwt.verify(token, process.env.JWT);
     const user = await User.findByPk(id);
-
     if (!user) {
       throw "nooo";
     }
@@ -230,6 +229,12 @@ User.prototype.removeFromCart = async function (product) {
   return this.getCart();
 };
 
+User.prototype.closeTheOrder = async function (cart) {
+  const cartToClose = await this.getCart();
+  await cartToClose.update({ status: "closed" });
+  return this.getCart();
+};
+
 /**
  * hooks
  */
@@ -243,6 +248,9 @@ const hashPassword = async (user) => {
 User.beforeCreate(hashPassword);
 User.beforeUpdate(hashPassword);
 User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
+// User.afterUpdate(async (user) => {
+//   await user.getCart();
+// });
 //after user is created, assoicate them with the order model via magic methods
 // User.afterCreate(async (user) => {
 //   await user.createOrder({status: 'open'})

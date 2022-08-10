@@ -47,7 +47,7 @@ class Checkout extends React.Component {
             <h1>Total: ${total / 100}</h1>
           </ul>
         </div>
-        <Link to={`/cart/payment`}>
+        <Link to={`/payment`}>
           <button>Onto Payment</button>
         </Link>
       </div>
