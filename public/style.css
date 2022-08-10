@@ -35,7 +35,8 @@ form div {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  background-color: #339CFF;
+  background-image:linear-gradient(to right, #DAF7A6, #339CFF);
+  
   border-radius: 5px;
 }
 
@@ -52,6 +53,7 @@ width: 100vw;
 height: 100vh;
 background-size: auto;
 border-radius: 8px;
+background-position: center;
 }
 
 h1 {
