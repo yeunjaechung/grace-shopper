@@ -18,6 +18,7 @@ class Cart extends React.Component {
     this.deleteFromLocalStorage = this.deleteFromLocalStorage.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.reRender = this.reRender.bind(this);
+    this.handleQuantity = this.handleQuantity.bind(this);
   }
 
   parseLocalStorage() {
@@ -49,7 +50,36 @@ class Cart extends React.Component {
     if (localStorage.getItem(`${product.id}`)) {
       let gotItem = localStorage.getItem(`${product.id}`);
       const parsedItem = JSON.parse(gotItem);
-      const newQuantity = quantity
+      const newQuantity = quantity;
+      const price = parsedItem.Order_Product.unitPrice;
+      const total = newQuantity * price;
+      const addingItem = {
+        Order_Product: {
+          productId: product.id,
+          quantity: newQuantity,
+          unitPrice: product.price,
+          totalPrice: total,
+        },
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        imageLarge: product.imageLarge,
+        imageSmall: product.imageSmall,
+        flavorText: product.flavorText,
+        nationalPokedexNumber: product.nationalPokedexNumbers,
+      };
+      let updatedStringItem = JSON.stringify(addingItem);
+      localStorage.setItem(`${product.id}`, updatedStringItem);
+      this.reRender();
+    }
+  }
+
+  handleQuantity(evt, product) {
+    let quantity = Number([evt.target.value]);
+    if (localStorage.getItem(`${product.id}`)) {
+      let gotItem = localStorage.getItem(`${product.id}`);
+      const parsedItem = JSON.parse(gotItem);
+      const newQuantity = quantity;
       const price = parsedItem.Order_Product.unitPrice;
       const total = newQuantity * price;
       const addingItem = {
@@ -81,8 +111,25 @@ class Cart extends React.Component {
   render() {
     let products = this.props.cart.products || [];
     let loggedOutCart = this.parseLocalStorage();
-    const buttonCheck =
+    const buttonCheckForUser =
       products.length > 0 ? (
+        <Link to={"/checkout"}>
+          <button>Proceed to checkout</button>
+        </Link>
+      ) : (
+        <Link to={"/products"}>
+          <button>Explore All Items!</button>
+        </Link>
+      );
+    products = products.sort(function (a, b) {
+      return (
+        new Date(b.Order_Product.createdAt) -
+        new Date(a.Order_Product.createdAt)
+      );
+    });
+
+    const buttonCheckForGuest =
+      loggedOutCart.length > 0 ? (
         <Link to={"/checkout"}>
           <button>Proceed to checkout</button>
         </Link>
@@ -115,18 +162,33 @@ class Cart extends React.Component {
               })}
               <h1>Total: ${total / 100}</h1>
             </ul>
-            {buttonCheck}
+            {buttonCheckForUser}
           </div>
         ) : (
           <div>
             <ul>
               {loggedOutCart.map((product) => {
                 this.state.total += product.Order_Product.totalPrice;
-                return (
-                  <div key={product.id}>
-                    <Link to={`/products/${product.id}`}>
-                      <img src={product.imageSmall} />
-                    </Link>
+                const renderCheck =
+                  product.Order_Product.quantity < 10 ? (
+                    <select
+                      value={product.Order_Product.quantity}
+                      onChange={(evt) => {
+                        this.handleQuantity(evt, product);
+                      }}
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10+</option>
+                    </select>
+                  ) : (
                     <div>
                       <input
                         ref={this.inputRef}
@@ -141,8 +203,14 @@ class Cart extends React.Component {
                         Update
                       </button>
                     </div>
+                  );
+                return (
+                  <div key={product.id}>
+                    <Link to={`/products/${product.id}`}>
+                      <img src={product.imageSmall} />
+                    </Link>
                     <label>Quantity:</label>
-                    {product.Order_Product.quantity}
+                    {renderCheck}
                     <br />
                     <br />
                     <span>
@@ -167,7 +235,7 @@ class Cart extends React.Component {
               })}
               <h1>Total: ${this.state.total / 100}</h1>
             </ul>
-            {buttonCheck}
+            {buttonCheckForGuest}
           </div>
         )}
       </div>
