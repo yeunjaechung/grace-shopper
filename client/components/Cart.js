@@ -7,6 +7,7 @@ import CartItem from "./CartItem";
 class Cart extends React.Component {
   constructor() {
     super();
+    this.inputRef = React.createRef();
     this.state = {
       total: 0,
       currentProduct: {},
@@ -15,6 +16,8 @@ class Cart extends React.Component {
     this.parseLocalStorage = this.parseLocalStorage.bind(this);
     this.updateTotal = this.updateTotal.bind(this);
     this.deleteFromLocalStorage = this.deleteFromLocalStorage.bind(this);
+    this.updateQuantity = this.updateQuantity.bind(this);
+    this.reRender = this.reRender.bind(this);
   }
 
   parseLocalStorage() {
@@ -41,8 +44,38 @@ class Cart extends React.Component {
     localStorage.removeItem(`${product.id}`);
   }
 
-  updateQuantity() {
-    
+  updateQuantity(product) {
+    let quantity = Number(this.inputRef.current.value);
+    if (localStorage.getItem(`${product.id}`)) {
+      let gotItem = localStorage.getItem(`${product.id}`);
+      const parsedItem = JSON.parse(gotItem);
+      const newQuantity = quantity
+      const price = parsedItem.Order_Product.unitPrice;
+      const total = newQuantity * price;
+      const addingItem = {
+        Order_Product: {
+          productId: product.id,
+          quantity: newQuantity,
+          unitPrice: product.price,
+          totalPrice: total,
+        },
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        imageLarge: product.imageLarge,
+        imageSmall: product.imageSmall,
+        flavorText: product.flavorText,
+        nationalPokedexNumber: product.nationalPokedexNumbers,
+      };
+      let updatedStringItem = JSON.stringify(addingItem);
+      localStorage.setItem(`${product.id}`, updatedStringItem);
+      this.reRender();
+    }
+  }
+
+  reRender() {
+    this.state.total = 0;
+    this.forceUpdate();
   }
 
   render() {
@@ -96,12 +129,13 @@ class Cart extends React.Component {
                     </Link>
                     <div>
                       <input
+                        ref={this.inputRef}
                         type="text"
                         defaultValue={product.Order_Product.quantity}
                       />
                       <button
                         onClick={() => {
-                          updateQuantity();
+                          this.updateQuantity(product);
                         }}
                       >
                         Update
@@ -123,7 +157,7 @@ class Cart extends React.Component {
                     <button
                       onClick={() => {
                         this.deleteFromLocalStorage(product);
-                        window.location.reload();
+                        this.reRender();
                       }}
                     >
                       Delete

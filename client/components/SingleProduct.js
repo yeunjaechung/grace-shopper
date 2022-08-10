@@ -35,7 +35,7 @@ export class SingleProduct extends React.Component {
       imageLarge: this.props.product.imageLarge,
       imageSmall: this.props.product.imageSmall,
       flavorText: this.props.product.flavorText,
-      nationalPokedexNumber: this.props.product.nationalPokedexNumber,
+      nationalPokedexNumbers: this.props.product.nationalPokedexNumbers,
     };
 
     if (localStorage.getItem(`${this.props.product.id}`)) {
@@ -58,7 +58,7 @@ export class SingleProduct extends React.Component {
         imageLarge: this.props.product.imageLarge,
         imageSmall: this.props.product.imageSmall,
         flavorText: this.props.product.flavorText,
-        nationalPokedexNumber: this.props.product.nationalPokedexNumber,
+        nationalPokedexNumbers: this.props.product.nationalPokedexNumbers,
       };
       let updatedStringItem = JSON.stringify(addingItem);
       localStorage.setItem(`${this.props.product.id}`, updatedStringItem);
