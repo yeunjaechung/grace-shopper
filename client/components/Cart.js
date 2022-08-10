@@ -130,8 +130,8 @@ class Cart extends React.Component {
 
     const buttonCheckForGuest =
       loggedOutCart.length > 0 ? (
-        <Link to={"/checkout"}>
-          <button>Proceed to checkout</button>
+        <Link to={"/signup"}>
+          <button>Proceed to Checkout</button>
         </Link>
       ) : (
         <Link to={"/products"}>

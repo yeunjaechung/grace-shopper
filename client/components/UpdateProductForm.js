@@ -8,7 +8,7 @@ class UpdateProduct extends React.Component {
     this.state = {
       name: "",
       price: 0,
-      description: "",
+      flavorText: "",
     };
     this.submitHandler = this.submitHandler.bind(this);
     this.handleChange = this.handleChange.bind(this);

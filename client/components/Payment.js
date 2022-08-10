@@ -32,7 +32,7 @@ export class Payment extends React.Component {
     }, 0);
 
     return (
-      <div>
+      <section className="bg-whiteblue container" id='carousel'>
         <ul>
           {products.map((product, index) => {
             return (
@@ -49,8 +49,11 @@ export class Payment extends React.Component {
           <h2>Total items: {cartItems}</h2>
           <h2>Subtotal: ${total / 100}</h2>
         </div>
-        <button onClick={submitPayment}>Make a payment</button>
-      </div>
+        <button onClick={() => {
+          submitPayment();
+          alert("Thank you for your purchase!");
+        }}>Make a payment</button>
+      </section>
     );
   }
 }

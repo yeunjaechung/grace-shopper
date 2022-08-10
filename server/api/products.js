@@ -56,10 +56,10 @@ router.post("/new-product", async (req, res, next) => {
 
 router.put('/update/:id', async (req, res, next) => {
   try {
-    const {name, price, description} = req.body;
+    const {name, price, flavorText} = req.body;
    const product = await Product.findByPk(req.params.id);
-   await product.update({name: name, price: price, flavorText: description});
-   res.send(product);
+   const updatedProd = await product.update({name: name, price: price, flavorText: flavorText});
+   res.send(updatedProd);
   } catch (err){
    next(err)
   }
