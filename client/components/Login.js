@@ -32,7 +32,7 @@ export class Login extends React.Component {
   }
   render() {
     return (
-      <div>
+      <section className="bg-whiteblue" id='carousel'>
         <h1>Login Test</h1>
         <div>
         <div>
@@ -40,7 +40,7 @@ export class Login extends React.Component {
         </div>
           <div>{/*<CreateUser /> goes here*/}</div>
         </div>
-      </div>
+      </section>
     );
   }
 }

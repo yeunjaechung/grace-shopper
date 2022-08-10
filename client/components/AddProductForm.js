@@ -27,7 +27,7 @@ handleChange(event){
 
 render(){
     return(
-        <div>
+        <div className="bg-white">
             <h1>Add your Pokemon here:</h1>
             <form onSubmit={this.submitHandler}>
                 <label>Name:</label>

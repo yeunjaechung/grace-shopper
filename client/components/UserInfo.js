@@ -47,7 +47,8 @@ class UserInfo extends React.Component {
     //let address = `${this.state.address1} ${this.state.address2} ${this.state.city} ${this.state.state} ${this.state.zip}`;
     const { handleSubmit, handleChange } = this;
     return (
-      <div className="update-form">
+      <section className="bg-whiteblue container" id='carousel'>
+      <div className="cartBox">
         <h4>Update User Details:</h4>
         <form onSubmit={handleSubmit}>
           <label htmlFor="firstName">First name: </label>
@@ -117,6 +118,7 @@ class UserInfo extends React.Component {
           <button type="submit">Submit</button>
         </form>
       </div>
+      </section>
     );
   }
 }

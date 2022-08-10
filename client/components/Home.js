@@ -6,12 +6,20 @@ import { connect } from "react-redux";
  */
 export const Home = (props) => {
   const { email } = props;
+  const { isLoggedIn } = props;
   console.log(props.auth);
 
   return (
-    <div className="homepage">
-      <h3>Welcome, {email}</h3>
-    </div>
+    <section className="bg-whiteblue container" id="carousel">
+      {isLoggedIn ? (
+        <div>
+          <h3 className="anchor-container">Welcome, {email}</h3>
+          <div className="homepage "></div>
+        </div>
+      ) : (
+        <div className="homepage "></div>
+      )}
+    </section>
   );
 };
 
@@ -21,6 +29,7 @@ export const Home = (props) => {
 
 const mapState = (state) => {
   return {
+    isLoggedIn: !!state.auth.id,
     email: state.auth.email,
     auth: state.auth,
   };

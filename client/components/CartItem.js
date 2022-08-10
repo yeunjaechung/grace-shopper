@@ -89,7 +89,7 @@ class CartItem extends React.Component {
       );
 
     return (
-      <div>
+      <div className="cartBox">
         <Link to={`/products/${product.id}`}>
           <img src={product.imageSmall} />
         </Link>

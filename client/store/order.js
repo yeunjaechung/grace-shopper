@@ -63,7 +63,6 @@ export const updateOrderProduct = (product, updateInfo) => {
 
 export const addItem = (product) => {
   const token = window.localStorage.getItem(TOKEN);
-  console.log(window.localStorage)
   return async function (dispatch) {
     const { data: cart } = await axios.post(`/api/users/addToCart`, product, {
       headers: {
