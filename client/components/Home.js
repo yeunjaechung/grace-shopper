@@ -9,7 +9,7 @@ export const Home = (props) => {
   console.log(props.auth);
 
   return (
-    <div>
+    <div className="homepage">
       <h3>Welcome, {email}</h3>
     </div>
   );
