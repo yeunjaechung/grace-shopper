@@ -12,7 +12,9 @@ import Cart from "./components/Cart";
 import { fetchProducts } from "./store/allProducts";
 import { fetchCart } from "./store/order";
 import UserInfo from "./components/UserInfo";
+import AllUsers from "./components/AllUsers"
 import EditCheckout from "./components/EditCheckout";
+
 
 /**
  * COMPONENT
@@ -44,6 +46,7 @@ class Routes extends Component {
             <Route exact path="/checkout" component={Checkout} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/editInfo" component={UserInfo} />
+            <Route  path="/users" component={AllUsers} />
           </Switch>
         ) : (
           <Switch>

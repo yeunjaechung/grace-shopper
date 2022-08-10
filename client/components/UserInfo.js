@@ -54,6 +54,7 @@ class UserInfo extends React.Component {
           <input
             className="input-effect"
             name="firstName"
+          
             onChange={handleChange}
             value={this.state.firstName} />
             <span className="focus-border" />

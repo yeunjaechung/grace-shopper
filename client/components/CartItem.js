@@ -100,6 +100,7 @@ class CartItem extends React.Component {
         <span>Unit Price: ${unitPrice / 100}</span>
         <h3>Subtotal: ${totalPrice / 100}</h3>
         <button onClick={handleDelete}>Delete</button>
+        
       </div>
     );
   }
