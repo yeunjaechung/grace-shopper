@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { me, updateAuth } from "../store/auth";
+import { me } from "../store/auth";
+import { updateUser } from "../store/userInfo";
 
 class EditCheckout extends React.Component {
   constructor(props) {
@@ -44,14 +45,63 @@ class EditCheckout extends React.Component {
       billingAddress,
     };
     this.props.update(newInfo);
+    this.props.history.push("/checkout");
   }
 
   componentDidMount() {
     this.props.load();
+    this.setState({
+      firstName: this.props.auth.firstName,
+      lastName: this.props.auth.lastName,
+      phoneNumber: this.props.auth.phoneNumber,
+      shippingAddress: this.props.auth.shippingAddress,
+      billingAddress: this.props.auth.billingAddress,
+    });
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.auth.id && this.props.auth.id) {
+    if (prevProps.auth.phoneNumber !== this.props.auth.phoneNumber) {
+      this.props.load();
+      this.setState({
+        firstName: this.props.auth.firstName,
+        lastName: this.props.auth.lastName,
+        phoneNumber: this.props.auth.phoneNumber,
+        shippingAddress: this.props.auth.shippingAddress,
+        billingAddress: this.props.auth.billingAddress,
+      });
+    } else if (prevProps.auth.firstName !== this.props.auth.firstName) {
+      this.props.load();
+      this.setState({
+        firstName: this.props.auth.firstName,
+        lastName: this.props.auth.lastName,
+        phoneNumber: this.props.auth.phoneNumber,
+        shippingAddress: this.props.auth.shippingAddress,
+        billingAddress: this.props.auth.billingAddress,
+      });
+    } else if (prevProps.auth.lastName !== this.props.auth.lastName) {
+      this.props.load();
+      this.setState({
+        firstName: this.props.auth.firstName,
+        lastName: this.props.auth.lastName,
+        phoneNumber: this.props.auth.phoneNumber,
+        shippingAddress: this.props.auth.shippingAddress,
+        billingAddress: this.props.auth.billingAddress,
+      });
+    } else if (
+      prevProps.auth.shippingAddress !== this.props.auth.shippingAddress
+    ) {
+      this.props.load();
+      this.setState({
+        firstName: this.props.auth.firstName,
+        lastName: this.props.auth.lastName,
+        phoneNumber: this.props.auth.phoneNumber,
+        shippingAddress: this.props.auth.shippingAddress,
+        billingAddress: this.props.auth.billingAddress,
+      });
+    } else if (
+      prevProps.auth.billingAddress !== this.props.auth.billingAddress
+    ) {
+      this.props.load();
       this.setState({
         firstName: this.props.auth.firstName,
         lastName: this.props.auth.lastName,
@@ -113,10 +163,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, { history }) => {
   return {
     load: () => dispatch(me()),
-    update: (auth) => dispatch(updateAuth(auth)),
+    update: (auth) => dispatch(updateUser(auth)),
   };
 };
 

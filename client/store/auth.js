@@ -13,7 +13,6 @@ const UPDATE_AUTH = "UPDATE_AUTH";
  * ACTION CREATORS
  */
 const setAuth = (auth) => ({ type: SET_AUTH, auth });
-const _updateAuth = (auth) => ({ type: UPDATE_AUTH, auth });
 
 /**
  * THUNK CREATORS
@@ -32,21 +31,8 @@ export const me = () => async (dispatch) => {
         authorization: token,
       },
     });
-    
     return dispatch(setAuth(res.data));
   }
-};
-
-export const updateAuth = (auth) => {
-  const token = window.localStorage.getItem(TOKEN);
-  return async function (dispatch) {
-    const { data: updatedUser } = await axios.post("/auth/editCheckout", auth, {
-      headers: {
-        authorization: token,
-      },
-    });
-    dispatch(_updateAuth(updatedUser));
-  };
 };
 
 export const authenticate = (email, password, method) => async (dispatch) => {
@@ -75,8 +61,6 @@ export const logout = () => {
 export default function (state = {}, action) {
   switch (action.type) {
     case SET_AUTH:
-      return action.auth;
-    case UPDATE_AUTH:
       return action.auth;
     default:
       return state;
